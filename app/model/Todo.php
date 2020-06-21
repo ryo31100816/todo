@@ -1,16 +1,10 @@
 <?php
 require_once('../../app/config/database.php');
 
-
-
 class Todo{
-
-    public $title;
-    public $detail;
-    public $status;
-
-
-
+    private $title;
+    private $detail;
+    private $status;
 
     public function getTitle() {
         return $this->title;
@@ -51,8 +45,7 @@ class Todo{
         }
         return $todo_list;
     }
-   
-   
+
     public static function findAll() {
         $dbh = new PDO(DSN, USER, PASSWORD);
         $stmh = $dbh->query('SELECT * FROM todos');
@@ -65,18 +58,17 @@ class Todo{
         return $todo_list;
     }
 
-
     public static function findById($todo_id){
         $dbh = new PDO(DSN, USER, PASSWORD);
         $stmh = $dbh->query(sprintf('SELECT * FROM todos WHERE id = %s', $todo_id));
-            if($stmh){
-                $todo = $stmh->fetch(PDO::FETCH_ASSOC);
-            }else{
-                $todo = [];
-            }
-            return $todo;
-    }
 
+        if($stmh){
+            $todo = $stmh->fetch(PDO::FETCH_ASSOC);
+        }else{
+            $todo = [];
+        }
+        return $todo;
+    }
 
     public function save(){
         $query = sprintf("INSERT INTO `todos` (`title`, `detail`, `status`,`created_at`, `updated_at`)
@@ -101,7 +93,6 @@ class Todo{
             // エラーメッセージ出力
             echo $e->getMessage();
         }
-
         return $result;
     }
 
@@ -115,8 +106,8 @@ class Todo{
             // exit;
                 
             $dbh = new PDO(DSN, USER, PASSWORD);
-            $stmt = $dbh->prepare($query);
-            $result = $stmt->execute();
+            // $stmt = $dbh->prepare($query);
+            // $result = $stmt->execute();
             try {
                // トランザクション開始
                 $dbh->beginTransaction();
@@ -135,7 +126,6 @@ class Todo{
             
                 // エラーメッセージ出力
                 echo $e->getMessage();
-
           }
     }
 
@@ -170,6 +160,5 @@ class Todo{
             }
             return $result;
     }
-
 }
 ?>

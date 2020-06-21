@@ -1,10 +1,8 @@
 <?php
-
-require_once('../../app/model/Todo.php');
+ini_set('log_errors','on');
+ini_set('error_log','/log/php_error.log');
+// require_once('../../app/model/Todo.php');
 require_once('../../app/controller/Todocontroller.php');
-
-// $query="SELECT * FROM todos";
-// $todo_list = Todo::findAll();
 
 try {
     $dbh = new PDO(DSN, USER, PASSWORD);
@@ -20,7 +18,6 @@ if(isset($_GET['action']) & $_GET['action'] === 'delete') {
 
 $controller = new TodoController();
 $todo_list = $controller->index();
-
 
 ?>
 
@@ -46,7 +43,7 @@ $todo_list = $controller->index();
         <ul>
             <?php foreach($todo_list as $todo):?>
                 <div class="task">
-                    <a href="./detail.php?todo_id=<?php echo $todo['id'];?>" class="item">
+                    <a class="item" href="./detail.php?todo_id=<?php echo $todo['id'];?>">
                         <?php echo $todo['title'];?>
                     </a>
                     <a class="delete_btn" data-id="<?php echo $todo['id'];?>">
@@ -61,12 +58,6 @@ $todo_list = $controller->index();
         <?php endif;?>
 </div>    
  </body>
+ <script type="text/javascript" src="/js/script.js?date=20190401"></script>
 </html>
-<script>
- $(".delete_btn").click(function() {
-    const todo_id = $(this).data('id');
-    alert("削除します");
-    // alert(todo_id);
-    window.location.href = "./index.php?action=delete&todo_id=" + todo_id;
- });
-</script>
+

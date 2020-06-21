@@ -1,18 +1,18 @@
 <?php
 
+ini_set('log_errors','on');
+ini_set('error_log','/log/php_error.log');
 require_once('../../app/model/Todo.php');
 require_once('../../app/validation/Todovalidation.php');
 
 class Todocontroller{
+    
     public function index(){
-       $todo_list = Todo::findAll();
-       
-       return $todo_list;
+       return Todo::findAll();
     }
 
     public function detail(){
         $todo_id = $_GET['todo_id'];
-
         $todo = Todo::findById($todo_id);
 
         return $todo;
@@ -96,7 +96,6 @@ class Todocontroller{
         // exit;
 
         $todo->update();
-        //updateが実行しても更新されない。トランザクションもコミットされている。。。要確。todo_idを取得してupdateに返さないと更新できないはず
         header( "Location: ../../view/todo/index.php" );   
     }
 

@@ -47,10 +47,12 @@
 
 .task{
     margin: 20px;
-
+    display: none;
 }
 
 .item{
+    width:50%;
+    display: inline-block;
     font-family: noto sans-serif;
     text-decoration: none;
 }

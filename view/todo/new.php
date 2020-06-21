@@ -1,5 +1,7 @@
 <?php
 
+ini_set('log_errors','on');
+ini_set('error_log','/log/php_error.log');
 require_once '../../app/controller/Todocontroller.php';
 
 session_start();
