@@ -3,29 +3,25 @@
 
 }
 
-#nav{
-    display: flex;
-    flex-direction: column;
+.navbar{
     width: 150px;
     height: 100%;
     position: fixed;
-    top: 0px;
-    left: 0px;
     background-color: rgb(105, 241, 235);
     box-shadow: 5px 5px 10px #000;
 }
 
 .task-container{
-    width: 100%; 
-    display:flex;
+    display: flex;
     flex-direction: column;
+    width: 100%; 
     margin-left: 150px;
     border-radius: 10px;
     box-shadow: 5px 5px 10px #000;
 }
 
 .btn{
-    width: 150px;
+    width: 120px;
     font-size: 20px;
     font-weight: bold;
     text-decoration: none;
@@ -41,7 +37,7 @@
 }
 
 .btn:hover{
-     background-color: yellow;
+    background-color: yellow;
     opacity: 0.5;
 }
 
@@ -50,14 +46,14 @@
     display: none;
 }
 
-.item{
+.task-item{
     width:50%;
     display: inline-block;
     font-family: noto sans-serif;
     text-decoration: none;
 }
 
-.delete_btn{
+.delete-btn{
     width: 50px;
     font-size: 12px;
     font-weight: bold;

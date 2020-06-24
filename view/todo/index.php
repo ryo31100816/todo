@@ -28,25 +28,24 @@ $todo_list = $controller->index();
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>TODOリスト</title>
-        <link rel="stylesheet" href="/css/stylesheet.css">
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/stylesheet-index.css">
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     </head>
   <body>
 <div class="wrapper-container">
-    <div id="nav">
-        <!-- <div class="menu-container"> -->
-            <a href="./new.php" class="btn">NEW</a>
-        <!-- </div> -->
+    <div id="nav" class="navbar">
+        <a href="./new.php" class="btn new-btn">NEW</a>
     </div>
     <?php if($todo_list):?>
     <div class="task-container">
         <ul>
             <?php foreach($todo_list as $todo):?>
                 <div class="task">
-                    <a class="item" href="./detail.php?todo_id=<?php echo $todo['id'];?>">
+                    <a class="task-item" href="./detail.php?todo_id=<?php echo $todo['id'];?>">
                         <?php echo $todo['title'];?>
                     </a>
-                    <a class="delete_btn" data-id="<?php echo $todo['id'];?>">
+                    <a class="delete-btn" data-id="<?php echo $todo['id'];?>">
                         Del
                     </a>
                 </div>

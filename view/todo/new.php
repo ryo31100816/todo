@@ -34,37 +34,40 @@ if($_SERVER["REQUEST_METHOD"] === "GET") {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <title>NEW</title>
+            <link rel="stylesheet" href="/css/normalize.css">
+            <link rel="stylesheet" href="/css/stylesheet-new.css">
         </head>
         <body>
         
-                        <?php if($error_msgs):?>
-                            <div>
-                                 <ul>
-                                    <?php foreach($error_msgs as $error_msg):?>
-                                        <li><?php echo $error_msg; ?></li>
-                                    <?php endforeach;?>
-                                 </ul>
-                            </div>
-                        <?php endif;?>
-
-            <div>New TODO</div>
-                <form action="./new.php" method="post">
+        <?php if($error_msgs):?>
+            <div>
+                    <ul>
+                    <?php foreach($error_msgs as $error_msg):?>
+                        <li><?php echo $error_msg; ?></li>
+                    <?php endforeach;?>
+                    </ul>
+            </div>
+        <?php endif;?>
+        <div class="new-register">
+        <div>New TODO</div>
+            <form class="register-form" action="./new.php" method="post">
+                <div> 
+                    <div>Title</div>
                     <div>
-                        <div>Title</div>
-                        <div>
-                            <input name="title" type="text" value="<?php echo $title;?>">
-                        </div>
+                        <input class= "form-item" name="title" type="text" value="<?php echo $title;?>">
                     </div>
+                </div>
+                <div>
+                    <div>Detail</div>
                     <div>
-                        <div>Detail</div>
-                        <div>
-                            <textarea name="detail"><?php echo $detail;?></textarea>
-                        </div>
+                        <textarea class="form-item" name="detail"><?php echo $detail;?></textarea>
                     </div>
-                        <button type="submit">登録</button>
-                </form>
-        </body>
-    </html>
+                </div>
+                    <button type="submit">登録</button>
+            </form>
+        </div>
+    </body>
+</html>
 
 
 
