@@ -49,15 +49,15 @@ if($_SERVER["REQUEST_METHOD"] === "GET") {
             </div>
         <?php endif;?>
         <div class="new-register">
-        <div>New TODO</div>
+        <div class="title">New TODO</div>
             <form class="register-form" action="./new.php" method="post">
-                <div> 
+                <div  class="form-contents"> 
                     <div>Title</div>
                     <div>
                         <input class= "form-item" name="title" type="text" value="<?php echo $title;?>">
                     </div>
                 </div>
-                <div>
+                <div  class="form-contents">
                     <div>Detail</div>
                     <div>
                         <textarea class="form-item" name="detail"><?php echo $detail;?></textarea>
