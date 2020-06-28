@@ -17,34 +17,17 @@ $error_msgs = $_SESSION['error_msgs'];
 //セッション削除
 unset($_SESSION["error_msgs"]);
 
-
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <title>編集</title>
+        <title>Edit</title>
+        <link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/stylesheet-new.css">
     </head>
 <body>
-    <div>編集</div>
-    <form action="./edit.php" method="post">
-    <input type="hidden" name="todo_id" value="<?php echo $_GET['todo_id'];?>">
-        <div>
-            <div>タイトル</div>
-            <div>
-                <input name="title" type="text" 
-                value="<?php echo $todo['title'];?>">
-            </div>
-        </div>
-        <div>
-            <div>詳細</div>
-            <div>
-                <textarea name="detail"><?php echo $todo['detail'];?></textarea>
-            </div>
-        </div>
-        <button type="submit">登録</button>
-    </form>
     <?php if($error_msgs):?>
         <div>
             <ul>
@@ -54,5 +37,24 @@ unset($_SESSION["error_msgs"]);
             </ul>
         </div>
     <?php endif;?>
+    <div class="new-register">
+    <div class="title">Edit</div>
+    <form class="register-form" action="./edit.php" method="post">
+    <input type="hidden" name="todo_id" value="<?php echo $_GET['todo_id'];?>">
+        <div  class="form-contents"> 
+            <div>Title</div>
+            <div>
+                <input class="form-item" name="title" type="text" value="<?php echo $todo['title'];?>">
+            </div>
+        </div>
+        <div  class="form-contents"> 
+            <div>Detail</div>
+            <div>
+                <textarea class="form-item" name="detail"><?php echo $todo['detail'];?></textarea>
+            </div>
+        </div>
+        <button type="submit">登録</button>
+    </form>
+    </div>
 </body>
 </html

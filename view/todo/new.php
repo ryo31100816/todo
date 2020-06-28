@@ -38,7 +38,6 @@ if($_SERVER["REQUEST_METHOD"] === "GET") {
             <link rel="stylesheet" href="/css/stylesheet-new.css">
         </head>
         <body>
-        
         <?php if($error_msgs):?>
             <div>
                     <ul>
