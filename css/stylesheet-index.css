@@ -20,6 +20,19 @@
     box-shadow: 5px 5px 10px #000;
 }
 
+.complete{
+    display: block;
+    flex-direction: column;
+    width: 100%; 
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #000;
+    background-color: rgb(161, 241, 161);
+}
+
+.hide{
+    display: none;
+}
+
 .btn{
     width: 120px;
     font-size: 20px;

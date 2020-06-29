@@ -1,6 +1,6 @@
 $(function(){
     
- $(".delete_btn").click(function() {
+ $(".delete-btn").click(function() {
     const todo_id = $(this).data('id');
     alert("削除します");
     // alert(todo_id);
@@ -11,8 +11,14 @@ $(function(){
     $('.task').fadeIn(1500);
  });
 
+ 
+ let where = document.getElementById('from-new').value;
 
-
-
+if(where === 'from-new'){
+   $('#complete').removeClass('hide').delay(5000).queue(function(next){
+      $(this).addClass('hide');
+      next();
+   });
+}
 
 });

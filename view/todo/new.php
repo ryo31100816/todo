@@ -34,6 +34,7 @@ if($_SERVER["REQUEST_METHOD"] === "GET") {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <title>NEW</title>
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
             <link rel="stylesheet" href="/css/normalize.css">
             <link rel="stylesheet" href="/css/stylesheet-new.css">
         </head>
@@ -47,22 +48,22 @@ if($_SERVER["REQUEST_METHOD"] === "GET") {
                     </ul>
             </div>
         <?php endif;?>
-        <div class="new-register">
+        <div class="wrapper-container">
         <div class="title">New TODO</div>
-            <form class="register-form" action="./new.php" method="post">
-                <div  class="form-contents"> 
+            <form class="showboard" action="./new.php" method="post">
+                <div  class="board-contents"> 
                     <div>Title</div>
                     <div>
-                        <input class= "form-item" name="title" type="text" value="<?php echo $title;?>">
+                        <input class= "board-item" name="title" type="text" value="<?php echo $title;?>">
                     </div>
                 </div>
-                <div  class="form-contents">
+                <div  class="board-contents">
                     <div>Detail</div>
                     <div>
-                        <textarea class="form-item" name="detail"><?php echo $detail;?></textarea>
+                        <textarea class="board-item" name="detail"><?php echo $detail;?></textarea>
                     </div>
                 </div>
-                    <button type="submit">登録</button>
+                    <button class="new-btn" type="submit"><i class="fas fa-plus"></i>Add</button>
             </form>
         </div>
     </body>

@@ -18,33 +18,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Detail</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
         <link rel="stylesheet" href="/css/normalize.css">
         <link rel="stylesheet" href="/css/stylesheet-new.css">
     </head>
     <body>
 
-    <div class="new-register">
+    <div class="wrapper-container">
     <div class="title">Detail</div>
-        <div  class="form-contents"> 
+    <form class="showboard" action="./edit.php" method="post">
+        <div  class="board-contents"> 
             <div>Title</div>
             <div>
-            <a class="form-item"><?php echo $todo["title"];?></a>
+                <a class="board-item"><?php echo $todo["title"];?></a>
             </div>
         </div>
-        <div  class="form-contents"> 
+        <div  class="board-contents"> 
             <div>Detail</div>
             <div>       
-            <a class="form-item"><?php echo $todo["detail"];?></a>
+                <a class="board-item"><?php echo $todo["detail"];?></a>
             </div>
-        </div>
-    </div>
-        <div>
-        <form action="./edit.php" method="post">
-            <input type="hidden" name="todo_id" value="<?php echo $todo['id'];?>">
-            <button type="submit">
-            <a href="./edit.php?todo_id=<?php echo $todo['id'];?>">Edit</a>
-            </button>      
-        </form>      
-        </div>
+        </div>    
+        <input type="hidden" name="todo_id" value="<?php echo $todo['id'];?>">
+        <button type="submit">
+            <a href="./edit.php?todo_id=<?php echo $todo['id'];?>"> To Edit</a>
+        </button>      
+    </form>
+    </div>  
     </body>
-</html
+</html>

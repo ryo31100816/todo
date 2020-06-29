@@ -2,13 +2,18 @@
 ini_set('log_errors','on');
 ini_set('error_log','/log/php_error.log');
 // require_once('../../app/model/Todo.php');
-require_once('../../app/controller/Todocontroller.php');
+require_once '../../app/controller/Todocontroller.php';
 
 try {
     $dbh = new PDO(DSN, USER, PASSWORD);
 } catch (PDOException $e) {
     echo 'データベースにアクセスできません！' . $e->getMessage();
     exit;
+}
+
+$from_new ='';
+if($_SERVER['HTTP_REFERER'] === "http://127.0.0.1:8000/view/todo/new.php"){
+    $from_new = 'from-new';
 }
      
 if(isset($_GET['action']) & $_GET['action'] === 'delete') {
@@ -27,7 +32,8 @@ $todo_list = $controller->index();
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>TODOリスト</title>
+        <title>TODO index</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
         <link rel="stylesheet" href="/css/normalize.css">
         <link rel="stylesheet" href="/css/stylesheet-index.css">
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -35,10 +41,19 @@ $todo_list = $controller->index();
   <body>
 <div class="wrapper-container">
     <div id="nav" class="navbar">
-        <a href="./new.php" class="btn new-btn">NEW</a>
+        <div><a href="./new.php" class="btn new-btn">NEW</a></div>
+        <div>
+        <form action="outputcsv.php" method="post">
+        <button type="submit" name="dlbtn" value="CSV">CSV</buttom>
+        </form>
+        </div>
     </div>
     <?php if($todo_list):?>
     <div class="task-container">
+    <div id="complete" class="complete hide">
+    <input id="from-new" type="hidden" value="<?php echo $from_new;?>">
+    <p>登録しました</p>
+    </div>
         <ul>
             <?php foreach($todo_list as $todo):?>
                 <div class="task">
@@ -46,7 +61,7 @@ $todo_list = $controller->index();
                         <?php echo $todo['title'];?>
                     </a>
                     <a class="delete-btn" data-id="<?php echo $todo['id'];?>">
-                        Del
+                    <i class="far fa-trash-alt"></i>
                     </a>
                 </div>
             <?php endforeach;?>

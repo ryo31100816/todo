@@ -24,6 +24,7 @@ unset($_SESSION["error_msgs"]);
     <head>
         <meta charset="UTF-8">
         <title>Edit</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
         <link rel="stylesheet" href="/css/normalize.css">
         <link rel="stylesheet" href="/css/stylesheet-new.css">
     </head>
@@ -37,23 +38,23 @@ unset($_SESSION["error_msgs"]);
             </ul>
         </div>
     <?php endif;?>
-    <div class="new-register">
+    <div class="wrapper-container">
     <div class="title">Edit</div>
-    <form class="register-form" action="./edit.php" method="post">
+    <form class="showboard" action="./edit.php" method="post">
     <input type="hidden" name="todo_id" value="<?php echo $_GET['todo_id'];?>">
-        <div  class="form-contents"> 
+        <div  class="board-contents"> 
             <div>Title</div>
             <div>
-                <input class="form-item" name="title" type="text" value="<?php echo $todo['title'];?>">
+                <input class="board-item" name="title" type="text" value="<?php echo $todo['title'];?>">
             </div>
         </div>
-        <div  class="form-contents"> 
+        <div  class="board-contents"> 
             <div>Detail</div>
             <div>
-                <textarea class="form-item" name="detail"><?php echo $todo['detail'];?></textarea>
+                <textarea class="board-item" name="detail"><?php echo $todo['detail'];?></textarea>
             </div>
         </div>
-        <button type="submit">登録</button>
+        <button type="submit"><i class="far fa-edit"></i>Edit</button>
     </form>
     </div>
 </body>
