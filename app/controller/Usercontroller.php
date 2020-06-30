@@ -34,4 +34,48 @@ class Usercontroller{
             return $e->getMessage();
         }
     }
+
+    public static function login($email,$password){
+        $result = false;
+        $user = self::getUserByEmail($email);
+
+        // var_dump($user);
+        // exit;
+
+        if(!$user){
+            $_SESSION['msg'] = 'emailが一致しません。';
+            return $result;
+        }
+
+        if(password_verify($password,$user['password'])){
+            session_regenerate_id(true);
+            $_SESSION['login_user'] = $user;
+            $result =true;
+            return $result;
+        }
+
+        $_SESSION['msg'] = 'パスワードが一致しません。';
+        return $result;
+
+
+    }
+
+    public static function getUserByEmail($email){
+
+        $query = sprintf("SELECT * FROM `users` WHERE email = '%s';",$email);
+        $dbh = new PDO(DSN, USER, PASSWORD);
+
+        try{
+            $stmh = $dbh->prepare($query);
+            $stmh->execute();
+            $user = $stmh->fetch();
+            return $user;
+        }catch(PDOException $e){
+            return $result;
+        }
+
+
+
+    }
+
 }
