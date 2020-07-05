@@ -1,11 +1,39 @@
 <?php
 
+require_once '../../app/controller/Usercontroller.php';
+
+
+// $action = new Usercontroller();
+// $user = $action->register($_POST);
 session_start();
 
-$error = $_SESSION;
+$error= [];
 
-$_SESSION = array();
-session_destroy();
+
+if(!$email = filter_input(INPUT_POST,'email')){
+    $error['email'] = 'メールアドレスを入力してください。';
+}
+if(!$password = filter_input(INPUT_POST,'password')){
+    $error['password'] = 'パスワードを入力してください。';
+};
+
+
+if(count($error) > 0){
+    $_SESSION = $error;
+    header('Location: login_form.php');
+    return;
+}
+
+$result = Usercontroller::login($email,$password);
+
+if(!$result){
+    header('Location:login_form.php');
+    return;
+}
+
+
+
+
 
 ?>
 
@@ -14,33 +42,18 @@ session_destroy();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ログイン画面</title>
+    <title>ログイン完了</title>
 </head>
 <body>
-    <h2>ログインフォーム</h2>
-    <?php  if(isset($error['msg'])):?>
-        <p><?php echo $error['msg'];?></p>
-    <?php endif; ?>
-    <form action="top.php" method="POST">
-    <p>
-    <lablel for="email">E-mail</lable>
-    <input type="email" name="email">
-    <?php  if(isset($error['email'])):?>
-        <p><?php echo $error['email'];?></p>
-    <?php endif; ?>
-    </p>
-    <p>
-    <lablel for="password">パスワード</lable>
-    <input type="password" name="password">
-    <?php  if(isset($error['password'])):?>
-        <p><?php echo $error['password'];?></p>
-    <?php endif; ?>
-    </p>
-    <p>
-    <p>
-    <input type="submit" value="ログイン">
-    </p>
-    </form>
-    <a href="signup_form.php">新規登録はこちら</a>
+<h2>ログイン完了</h2>
+<?php if(count($error) > 0) : ?>
+    <?php foreach($error as $e) : ?>
+    <p><?php echo $e ?></p>
+    <? endforeach ?>
+<?php else : ?>
+    <p>ログインしました。</p>
+<?php endif ?>
+    <a href="mypage.php">マイページへ戻る</a>
+
 </body>
 </html>

@@ -73,9 +73,21 @@ class Usercontroller{
         }catch(PDOException $e){
             return $result;
         }
+    }
 
+    public static function checkLogin(){
+        $result = false;
+        // var_dump($_SESSION);
+        // exit;
+        if(isset($_SESSION['login_user']) && $_SESSION['login_user'] > 0){
+            return $result = true;
+        }
+        return $result;
+    }
 
-
+    public static function logout(){
+        $_SESSION = array();
+        session_destroy();
     }
 
 }

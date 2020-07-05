@@ -11,7 +11,6 @@ $(function(){
     $('.task').fadeIn(1500);
  });
 
- 
  let where = document.getElementById('from-new').value;
 
 if(where === 'from-new'){
