@@ -1,7 +1,6 @@
 <?php
 ini_set('log_errors','on');
 ini_set('error_log','/log/php_error.log');
-// require_once('../../app/model/Todo.php');
 require_once '../../app/controller/Todocontroller.php';
 
 try {
@@ -10,6 +9,10 @@ try {
     echo 'データベースにアクセスできません！' . $e->getMessage();
     exit;
 }
+
+session_start();
+$username = $_SESSION['login_user']['username'];
+$user_id = $_SESSION['login_user']['user_id'];
 
 $from_new ='';
 if($_SERVER['HTTP_REFERER'] === "http://127.0.0.1:8000/view/todo/new.php"){
@@ -22,7 +25,7 @@ if(isset($_GET['action']) & $_GET['action'] === 'delete') {
 }
 
 $controller = new TodoController();
-$todo_list = $controller->index();
+$todo_list = $controller->index($user_id);
 
 ?>
 
@@ -38,22 +41,23 @@ $todo_list = $controller->index();
         <link rel="stylesheet" href="/css/stylesheet-index.css">
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     </head>
-  <body>
+<body>
 <div class="wrapper-container">
     <div id="nav" class="navbar">
+        <div><a href="./mypage.php" class="login-user"><?php echo $username; ?></a></div>
         <div><a href="./new.php" class="btn new-btn">NEW</a></div>
         <div>
         <form action="outputcsv.php" method="post">
-        <button type="submit" name="dlbtn" value="CSV">CSV</buttom>
+        <button class="btn" type="submit" name="dlbtn" value="CSV">CSV</buttom>
         </form>
         </div>
     </div>
     <?php if($todo_list):?>
     <div class="task-container">
-    <div id="complete" class="complete hide">
-    <input id="from-new" type="hidden" value="<?php echo $from_new;?>">
-    <p>登録しました</p>
-    </div>
+        <div id="complete" class="complete hide">
+        <input id="from-new" type="hidden" value="<?php echo $from_new;?>">
+        <p>登録しました</p>
+        </div>
         <ul>
             <?php foreach($todo_list as $todo):?>
                 <div class="task">
@@ -61,17 +65,17 @@ $todo_list = $controller->index();
                         <?php echo $todo['title'];?>
                     </a>
                     <a class="delete-btn" data-id="<?php echo $todo['id'];?>">
-                    <i class="far fa-trash-alt"></i>
+                        <i class="far fa-trash-alt"></i>
                     </a>
                 </div>
             <?php endforeach;?>
         </ul>
-        <?php else:?>
-            <div>データがありません</div>
+    <?php else:?>
+        <div>データがありません</div>
     </div>
-        <?php endif;?>
+    <?php endif;?>
 </div>    
- </body>
- <script type="text/javascript" src="/js/script.js?date=20190401"></script>
+</body>
+<script type="text/javascript" src="/js/script.js?date=20190401"></script>
 </html>
 

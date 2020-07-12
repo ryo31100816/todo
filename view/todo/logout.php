@@ -14,19 +14,7 @@ if(!$result){
 
 Usercontroller::logout();
 
+header('Location: login_form.php');
+return;
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ログアウト</title>
-</head>
-<body>
-    <h2>ログアウト完了</h2>
-<p>ログアウト完了</p>
-<a href="login_form.php">ログイン画面へ<a>
-</body>
-</html>

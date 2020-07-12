@@ -2,6 +2,8 @@
 require_once('../../app/config/database.php');
 
 class Todo{
+    private $todo_id;
+    private $user_id;
     private $title;
     private $detail;
     private $status;
@@ -30,9 +32,12 @@ class Todo{
         $this->status = $status;
     }        
 
-    public function setId($todo_id) {
-        $this->id = $todo_id;
-    }     
+    public function setTodoId($todo_id) {
+        $this->todo_id = $todo_id;
+    }
+    public function setUserId($user_id) {
+        $this->user_id = $user_id;
+    }
 
     public static function findByQuery($query){
         $dbh = new PDO(DSN, USER, PASSWORD);
@@ -46,9 +51,9 @@ class Todo{
         return $todo_list;
     }
 
-    public static function findAll() {
+    public static function findAll($user_id) {
         $dbh = new PDO(DSN, USER, PASSWORD);
-        $stmh = $dbh->query('SELECT * FROM todos');
+        $stmh = $dbh->query(sprintf('SELECT * FROM todos WHERE user_id = %s',$user_id));
 
         if($stmh){
             $todo_list = $stmh->fetchAll(PDO::FETCH_ASSOC);
@@ -71,8 +76,8 @@ class Todo{
     }
 
     public function save(){
-        $query = sprintf("INSERT INTO `todos` (`title`, `detail`, `status`,`created_at`, `updated_at`)
-                    VALUES ('%s', '%s', 0, NOW(), NOW());",$this->title, $this->detail);
+        $query = sprintf("INSERT INTO `todos` (`title`, `detail`, `status`,`user_id`,`created_at`, `updated_at`)
+                    VALUES ('%s', '%s', 0, %s,NOW(), NOW());",$this->title, $this->detail,$this->user_id);
         $dbh = new PDO(DSN, USER, PASSWORD);
     
         try {

@@ -15,7 +15,6 @@ body{
     flex-direction: column;
     align-items: center;
     width: 50%; 
-    height: 60%; 
     margin: auto;
     border-radius: 10px;
     box-shadow: 5px 5px 10px #000;
@@ -24,7 +23,7 @@ body{
 .showboard{
     width: 70%;
     align-items: center;
-    margin: 5rem auto;
+    margin: 1rem auto;
 }
 
 .title{

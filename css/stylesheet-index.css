@@ -83,3 +83,12 @@
     cursor: pointer;
 }
 
+.login-user{
+    width: 120px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    padding: 8px 0 10px;
+}

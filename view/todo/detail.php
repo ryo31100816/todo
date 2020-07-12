@@ -8,9 +8,6 @@
 
  ?>
 
-
-
-
 <!DOCTYPE html>
  <html lang="ja">
     <head>
@@ -22,11 +19,11 @@
         <link rel="stylesheet" href="/css/normalize.css">
         <link rel="stylesheet" href="/css/stylesheet-new.css">
     </head>
-    <body>
-
-    <div class="wrapper-container">
+<body>
+<div class="wrapper-container">
     <div class="title">Detail</div>
-    <form class="showboard" action="./edit.php" method="post">
+    <form class="showboard" method="POST" action="./edit.php">
+    <input type="hidden" name="todo_id" value="<?php echo $todo['id'];?>">
         <div  class="board-contents"> 
             <div>Title</div>
             <div>
@@ -39,11 +36,8 @@
                 <a class="board-item"><?php echo $todo["detail"];?></a>
             </div>
         </div>    
-        <input type="hidden" name="todo_id" value="<?php echo $todo['id'];?>">
-        <button type="submit">
-            <a href="./edit.php?todo_id=<?php echo $todo['id'];?>"> To Edit</a>
-        </button>      
+        <button type="submit"><a href="./edit.php?todo_id=<?php echo $todo['id'];?>"> To Edit</a></button>      
     </form>
-    </div>  
-    </body>
+</div>  
+</body>
 </html>

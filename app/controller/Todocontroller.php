@@ -7,23 +7,22 @@ require_once('../../app/validation/Todovalidation.php');
 
 class Todocontroller{
     
-    public function index(){
-       return Todo::findAll();
+    public function index($user_id){
+        return Todo::findAll($user_id);
     }
 
     public function detail(){
         $todo_id = $_GET['todo_id'];
         $todo = Todo::findById($todo_id);
-
         return $todo;
     }
 
     public function new(){
         $data = array(
+            "user_id" => $_POST['user_id'],
             "title" => $_POST['title'],
-            "detail" => $_POST['detail'],
+            "detail" => $_POST['detail']
         );
-
         $validation = new Todovalidation;
         $validation->setData($data);
         if($validation->check() === false) {
@@ -32,19 +31,17 @@ class Todocontroller{
 
             session_start();
             $_SESSION['error_msgs'] = $error_msgs;
-                // var_dump($_SESSION['error_msgs'] );
-                // exit;
             $params = sprintf('?title=%s&detail=%s', $title, $detail);
             header("Location: ../../view/todo/new.php" . $params);
             return;
         }
     
-
         $validate_data = $validation->getData($data);
         $title = $validate_data['title'];
         $detail = $validate_data['detail'];
 
         $todo = new Todo();
+        $todo->setUserId($data['user_id']);
         $todo->setTitle($title);
         $todo->setDetail($detail);
         $result = $todo->save();
@@ -113,7 +110,7 @@ class Todocontroller{
         }
 
         $todo = new Todo;
-        $todo->setId($todo_id);
+        $todo->setTodoId($todo_id);
         $result = $todo->delete();
         if($result === false) {
                 session_start();

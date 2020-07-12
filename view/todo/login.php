@@ -7,29 +7,10 @@ require_once '../../app/controller/Usercontroller.php';
 // $user = $action->register($_POST);
 session_start();
 
-$error= [];
 
 
-if(!$email = filter_input(INPUT_POST,'email')){
-    $error['email'] = 'メールアドレスを入力してください。';
-}
-if(!$password = filter_input(INPUT_POST,'password')){
-    $error['password'] = 'パスワードを入力してください。';
-};
 
 
-if(count($error) > 0){
-    $_SESSION = $error;
-    header('Location: login_form.php');
-    return;
-}
-
-$result = Usercontroller::login($email,$password);
-
-if(!$result){
-    header('Location:login_form.php');
-    return;
-}
 
 
 

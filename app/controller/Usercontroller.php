@@ -24,8 +24,6 @@ class Usercontroller{
 
             $result = $dbh->commit();
 
-            //bool(true)となるがデータベースにデータがない
-            var_dump($result);
         } catch(PDOException $e) {
             // ロールバック
             $dbh->rollBack();
@@ -36,58 +34,65 @@ class Usercontroller{
     }
 
     public static function login($email,$password){
-        $result = false;
-        $user = self::getUserByEmail($email);
-
+        $data = array(
+            'email' => $email,
+            'password' => $password
+        );
+        $validation = new Uservalidation;
+        $validation->setData($data);
+        if($validation->check() === false) {
+            $error_msgs = $validation->getErrorMessages();
+            session_start();
+            $_SESSION['error_msgs'] = $error_msgs;
+            header("Location: ../../view/todo/login_form.php");
+            return;
+        }
+        // if(!$email = filter_input(INPUT_POST,'email')){
+        //     $error['email'] = 'メールアドレスを入力してください。';
+        // }
+        // if(!$password = filter_input(INPUT_POST,'password')){
+        //     $error['password'] = 'パスワードを入力してください。';
+        // }
         // var_dump($user);
         // exit;
+        $validate_data = $validation->getData($data);
+        $email = $validate_data['email'];
+        $password = $validate_data['password'];
 
+        $user = User::getUserByEmail($email);
         if(!$user){
             $_SESSION['msg'] = 'emailが一致しません。';
-            return $result;
+            return false;
         }
-
         if(password_verify($password,$user['password'])){
             session_regenerate_id(true);
             $_SESSION['login_user'] = $user;
-            $result =true;
-            return $result;
+            return true;
         }
-
         $_SESSION['msg'] = 'パスワードが一致しません。';
-        return $result;
-
-
-    }
-
-    public static function getUserByEmail($email){
-
-        $query = sprintf("SELECT * FROM `users` WHERE email = '%s';",$email);
-        $dbh = new PDO(DSN, USER, PASSWORD);
-
-        try{
-            $stmh = $dbh->prepare($query);
-            $stmh->execute();
-            $user = $stmh->fetch();
-            return $user;
-        }catch(PDOException $e){
-            return $result;
-        }
+        return false;
     }
 
     public static function checkLogin(){
-        $result = false;
         // var_dump($_SESSION);
         // exit;
         if(isset($_SESSION['login_user']) && $_SESSION['login_user'] > 0){
-            return $result = true;
+            return true;
         }
-        return $result;
+        return false;
     }
 
     public static function logout(){
         $_SESSION = array();
         session_destroy();
     }
-
+    public static function h($str){
+        return htmlspecialchars($str,ENT_QUOTES,'utf-8');
+    }
+    
+    public static function setToken(){
+        $csrf_token = bin2hex(random_bytes(32));
+        $_SESSION['csrf_token'] = $csrf_token;
+        return $csrf_token;
+    }
 }
