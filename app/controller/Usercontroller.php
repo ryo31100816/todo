@@ -1,35 +1,39 @@
 <?php
-
-require_once('../../app/model/User.php');
-require_once('../../app/validation/Uservalidation.php');
+require_once '../../app/model/User.php';
+require_once '../../app/validation/Uservalidation.php';
 
 class Usercontroller{
 
-    public static function register($userdata){
-        $user = [];
+    public function register(){
+        $data = array(
+            'username' => $_POST['username'],
+            'email' => $_POST['email'],
+            'password' => $_POST['password'],
+            'password_conf' => $_POST['password_conf']
+        );
+        $validation = new Uservalidation;
+        $validation->setData($data);
+        if($validation->register_check() === false) {
+            $error_msgs = $validation->getErrorMessages();
+            session_start();
+            $_SESSION['error_msgs'] = $error_msgs;
+            header("Location: ../../view/todo/signup_form.php");
+            return;
+        }
 
-        $user['username'] =$_POST['username'];
-        $user['email'] =$_POST['email'];
-        $user['password'] =password_hash($_POST['password'],PASSWORD_DEFAULT);
+        $validate_data = $validation->getData($data);
+        $username = $validate_data['username'];
+        $email = $validate_data['email'];
+        $password = password_hash($validate_data['password'],PASSWORD_DEFAULT);
 
-        $query = sprintf("INSERT INTO `users` (`username`,`email`,`password`)
-                    VALUES ('%s','%s','%s');",$user['username'],$user['email'],$user['password']);
-        $dbh = new PDO(DSN, USER, PASSWORD);
+        $user = new User();
+        $user->setUsername($username);
+        $user->setEmail($email);
+        $user->setPassword($password);
+        $result = $user->new_user();
 
-        try{
-            $dbh->beginTransaction();
-            
-            $stmh = $dbh->prepare($query);
-            $stmh->execute();
-
-            $result = $dbh->commit();
-
-        } catch(PDOException $e) {
-            // ロールバック
-            $dbh->rollBack();
-
-            // エラーメッセージ出力
-            return $e->getMessage();
+        if($result === false) {
+            header("Location: ../../view/todo/signup_form.php");
         }
     }
 
@@ -47,14 +51,6 @@ class Usercontroller{
             header("Location: ../../view/todo/login_form.php");
             return;
         }
-        // if(!$email = filter_input(INPUT_POST,'email')){
-        //     $error['email'] = 'メールアドレスを入力してください。';
-        // }
-        // if(!$password = filter_input(INPUT_POST,'password')){
-        //     $error['password'] = 'パスワードを入力してください。';
-        // }
-        // var_dump($user);
-        // exit;
         $validate_data = $validation->getData($data);
         $email = $validate_data['email'];
         $password = $validate_data['password'];
@@ -74,8 +70,6 @@ class Usercontroller{
     }
 
     public static function checkLogin(){
-        // var_dump($_SESSION);
-        // exit;
         if(isset($_SESSION['login_user']) && $_SESSION['login_user'] > 0){
             return true;
         }
@@ -86,12 +80,14 @@ class Usercontroller{
         $_SESSION = array();
         session_destroy();
     }
+
     public static function h($str){
         return htmlspecialchars($str,ENT_QUOTES,'utf-8');
     }
     
     public static function setToken(){
         $csrf_token = bin2hex(random_bytes(32));
+        session_start();
         $_SESSION['csrf_token'] = $csrf_token;
         return $csrf_token;
     }

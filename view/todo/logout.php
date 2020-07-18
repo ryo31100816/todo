@@ -7,13 +7,11 @@ if(!$logout = filter_input(INPUT_POST,'logout')){
 }
 
 $result = Usercontroller::checkLogin();
-
 if(!$result){
     exit('セッションが切れたのでログインし直してください');
 }
 
 Usercontroller::logout();
-
 header('Location: login_form.php');
 return;
 

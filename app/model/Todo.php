@@ -107,31 +107,27 @@ class Todo{
                     $this->detail,
                     $this->todo_id
                     );
-            // var_dump($query);
-            // exit;
                 
-            $dbh = new PDO(DSN, USER, PASSWORD);
-            // $stmt = $dbh->prepare($query);
-            // $result = $stmt->execute();
-            try {
-               // トランザクション開始
-                $dbh->beginTransaction();
-                    
-                $stmt = $dbh->prepare($query);
-       
-                $stmt->execute();
+        $dbh = new PDO(DSN, USER, PASSWORD);
+        try {
+            // トランザクション開始
+            $dbh->beginTransaction();
                 
-                // コミット
-                $dbh->commit();
-                
-            } catch(PDOException $e) {
-                
-                // ロールバック
-                $dbh->rollBack();
+            $stmt = $dbh->prepare($query);
+    
+            $stmt->execute();
             
-                // エラーメッセージ出力
-                echo $e->getMessage();
-          }
+            // コミット
+            $dbh->commit();
+            
+        } catch(PDOException $e) {
+            
+            // ロールバック
+            $dbh->rollBack();
+        
+            // エラーメッセージ出力
+            echo $e->getMessage();
+        }
     }
 
     public static function isExistById($todo_id) {
@@ -145,25 +141,24 @@ class Todo{
     }
 
     public function delete() {
-           try {
-                $dbh = new PDO(DSN, USER, PASSWORD);
+        try {
+            $dbh = new PDO(DSN, USER, PASSWORD);
+        
+            // トランザクション開始
+            $dbh->beginTransaction();
+            $query = sprintf("DELETE FROM todos WHERE id = %s", $this->id);
 
-                // トランザクション開始
-                $dbh->beginTransaction();
-                $query = sprintf("DELETE FROM todos WHERE id = %s", $this->id);
+            $stmt = $dbh->prepare($query);
+            $result = $stmt->execute();
 
-                $stmt = $dbh->prepare($query);
-                $result = $stmt->execute();
+            $dbh->commit();
+        } catch (PDOException $e) {
+            // ロールバック
+            $dbh->rollBack();
 
-                $dbh->commit();
-            } catch (PDOException $e) {
-                // ロールバック
-                $dbh->rollBack();
-
-                echo $e->getMessage();
-                $result = false;
-            }
-            return $result;
+            echo $e->getMessage();
+            $result = false;
+        }
+        return $result;
     }
 }
-?>

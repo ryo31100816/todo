@@ -4,7 +4,7 @@ services:
     image: nginx:1.15.6
     ports:   
       - "8000:80"
-    depends_on: # 追加
+    depends_on: # appより後
       - app
     volumes:
       - ./docker/web/default.conf:/etc/nginx/conf.d/default.conf
@@ -13,10 +13,10 @@ services:
     build: ./docker/php
     volumes:
     - .:/var/www/html
-    depends_on:
+    depends_on: #mysqlより後
     - mysql
   mysql:
-    image: mysql:5.7
+    image: mysql:5.7 #このイメージを使いコンテナを作る
     environment:
       MYSQL_DATABASE: myDB
       MYSQL_USER: Ryo

@@ -1,12 +1,16 @@
 <?php
-
-ini_set('log_errors','on');
-ini_set('error_log','/log/php_error.log');
-require_once('../../app/model/Todo.php');
-require_once('../../app/validation/Todovalidation.php');
+require_once '../../app/model/Todo.php';
+require_once '../../app/validation/Todovalidation.php';
 
 class Todocontroller{
-    
+
+    public static function is_login($user_id){
+        if(isset($user_id)){
+            return true;
+        }
+        return false;
+    }
+
     public function index($user_id){
         return Todo::findAll($user_id);
     }
@@ -50,7 +54,7 @@ class Todocontroller{
             $params = sprintf("?title=%s&detail=%s", $title, $detail);
             header( "Location: ../../view/todo/new.php" . $params);
         }
-            header( "Location: ../../view/todo/index.php" );
+        header( "Location: ../../view/todo/index.php" );
     }
 
     public function edit(){
@@ -74,8 +78,7 @@ class Todocontroller{
             session_start();
             $_SESSION['error_msgs'] = $error_msgs;
     
-            $params = sprintf("?title=%s&detail=%s",
-                        $title,$detail);
+            $params = sprintf("?title=%s&detail=%s",$title,$detail);
             header("Location: ../../view/todo/edit.php" . $params);
             return;
         }
@@ -89,9 +92,7 @@ class Todocontroller{
         $todo->setTitle($title);
         $todo->setDetail($detail);
         $param = $_SERVER['QUERY_STRING'];
-        // var_dump($todo);
-        // exit;
-
+    
         $todo->update();
         header( "Location: ../../view/todo/index.php" );   
     }
@@ -100,27 +101,25 @@ class Todocontroller{
         $todo_id = $_GET['todo_id'];
         $is_exist = Todo::isExistById($todo_id);
         if(!$is_exist) {
-                session_start();
-                $_SESSION['error_msgs'] = [
-                        sprintf("id=%sに該当するレコードが存在しません",
-                        $todo_id)
-                        ];
-        header("Location: ../../view/todo/index.php");
-        return;
+            session_start();
+            $_SESSION['error_msgs'] = [
+                sprintf("id=%sに該当するレコードが存在しません",
+                $todo_id)
+            ];
+            header("Location: ../../view/todo/index.php");
+            return;
         }
 
         $todo = new Todo;
         $todo->setTodoId($todo_id);
         $result = $todo->delete();
         if($result === false) {
-                session_start();
-                $_SESSION['error_msgs'] = [
-                                        sprintf("削除に失敗しました。id=%s", 
-                                        $todo_id)
-                                        ];
+            session_start();
+            $_SESSION['error_msgs'] = [
+                sprintf("削除に失敗しました。id=%s", 
+                $todo_id)
+            ];
         }
         header("Location: ../../view/todo/index.php");
     }
 }
-
-?>

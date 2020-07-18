@@ -14,6 +14,12 @@ session_start();
 $username = $_SESSION['login_user']['username'];
 $user_id = $_SESSION['login_user']['user_id'];
 
+$login_status = Todocontroller::is_login($user_id);
+if(!$login_status){
+    header("Location: login_form.php");
+    return;
+}
+
 $from_new ='';
 if($_SERVER['HTTP_REFERER'] === "http://127.0.0.1:8000/view/todo/new.php"){
     $from_new = 'from-new';
@@ -47,7 +53,7 @@ $todo_list = $controller->index($user_id);
         <div><a href="./mypage.php" class="login-user"><?php echo $username; ?></a></div>
         <div><a href="./new.php" class="btn new-btn">NEW</a></div>
         <div>
-        <form action="outputcsv.php" method="post">
+        <form method="POST" action="output_csv.php">
         <button class="btn" type="submit" name="dlbtn" value="CSV">CSV</buttom>
         </form>
         </div>
