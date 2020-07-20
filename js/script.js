@@ -3,7 +3,6 @@ $(function(){
  $(".delete-btn").click(function() {
     const todo_id = $(this).data('id');
     alert("削除します");
-    // alert(todo_id);
     window.location.href = "./index.php?action=delete&todo_id=" + todo_id;
  });
 

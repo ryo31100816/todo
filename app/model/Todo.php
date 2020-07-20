@@ -146,7 +146,7 @@ class Todo{
         
             // トランザクション開始
             $dbh->beginTransaction();
-            $query = sprintf("DELETE FROM todos WHERE id = %s", $this->id);
+            $query = sprintf("DELETE FROM todos WHERE id = %s", $this->todo_id);
 
             $stmt = $dbh->prepare($query);
             $result = $stmt->execute();

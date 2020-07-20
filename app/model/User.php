@@ -17,7 +17,7 @@ class User{
     }
 
     public function setUsername($username) {
-        $this->username;
+        $this->username = $username;
     }
 
     public function getEmail() {
