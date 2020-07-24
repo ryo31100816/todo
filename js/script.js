@@ -10,9 +10,9 @@ $(function(){
     $('.task').fadeIn(1500);
  });
 
- let where = document.getElementById('from-new').value;
+ let msg = document.getElementById('success-msg').value;
 
-if(where === 'from-new'){
+if(typeof msg !== 'undefined' && msg !== ''){
    $('#complete').removeClass('hide').delay(5000).queue(function(next){
       $(this).addClass('hide');
       next();

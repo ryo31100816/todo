@@ -1,6 +1,5 @@
 <?php
-ini_set('log_errors','on');
-ini_set('error_log','/log/php_error.log');
+session_start();
 require_once '../../app/controller/Todocontroller.php';
 
 try {
@@ -9,29 +8,20 @@ try {
     echo 'データベースにアクセスできません！' . $e->getMessage();
     exit;
 }
-
-session_start();
-$username = $_SESSION['login_user']['username'];
-$user_id = $_SESSION['login_user']['user_id'];
-
-$login_status = Todocontroller::is_login($user_id);
-if(!$login_status){
-    header("Location: login_form.php");
-    return;
-}
-
-$from_new ='';
-if($_SERVER['HTTP_REFERER'] === "http://127.0.0.1:8000/view/todo/new.php"){
-    $from_new = 'from-new';
-}
      
 if(isset($_GET['action']) & $_GET['action'] === 'delete') {
     $action = new Todocontroller;
     $todo_list = $action->delete();
 }
 
-$controller = new TodoController();
-$todo_list = $controller->index($user_id);
+$controller = new Todocontroller();
+$username = $_SESSION['login_user']['username'];
+$todo_list = $controller->index();
+
+if(isset($_SESSION['success_msg'])){
+    $success_msg = $_SESSION['success_msg'];
+    unset($_SESSION['success_msg']);
+}
 
 ?>
 
@@ -50,7 +40,7 @@ $todo_list = $controller->index($user_id);
 <body>
 <div class="wrapper-container">
     <div id="nav" class="navbar">
-        <div><a href="./mypage.php" class="login-user"><?php echo $username; ?></a></div>
+        <div><a href="../login/mypage.php" class="login-user"><?php echo $username; ?></a></div>
         <div><a href="./new.php" class="btn new-btn">NEW</a></div>
         <div>
         <form method="POST" action="output_csv.php">
@@ -61,8 +51,8 @@ $todo_list = $controller->index($user_id);
     <?php if($todo_list):?>
     <div class="task-container">
         <div id="complete" class="complete hide">
-        <input id="from-new" type="hidden" value="<?php echo $from_new;?>">
-        <p>登録しました</p>
+        <input id="success-msg" type="hidden" value="<?php echo $success_msg;?>">
+        <p class="task"><?php echo $success_msg; ?></p>
         </div>
         <ul>
             <?php foreach($todo_list as $todo):?>

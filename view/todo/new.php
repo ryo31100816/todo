@@ -1,16 +1,11 @@
 <?php
+session_start();
 require_once '../../app/controller/Todocontroller.php';
 
-session_start();
+new Todocontroller();
 $user_id = $_SESSION['login_user']['user_id'];
 $error_msgs = $_SESSION['error_msgs'];
 unset($_SESSION["error_msgs"]);
-
-$login_status = Todocontroller::is_login($user_id);
-if(!$login_status){
-    header("Location: login_form.php");
-    return;
-}
 
 if($_SERVER["REQUEST_METHOD"] === "POST") {
     $action = new Todocontroller;

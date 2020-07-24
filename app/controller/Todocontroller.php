@@ -4,14 +4,16 @@ require_once '../../app/validation/Todovalidation.php';
 
 class Todocontroller{
 
-    public static function is_login($user_id){
-        if(isset($user_id)){
-            return true;
+    public function __construct(){
+        if(isset($_SESSION['login_user']) && $_SESSION['login_user'] > 0){
+            return;
         }
-        return false;
+        header("Location: ../../view/login/login_form.php");
+        return;
     }
 
-    public function index($user_id){
+    public function index(){
+        $user_id = $_SESSION['login_user']['user_id'];
         return Todo::findAll($user_id);
     }
 
@@ -54,6 +56,7 @@ class Todocontroller{
             $params = sprintf("?title=%s&detail=%s", $title, $detail);
             header( "Location: ../../view/todo/new.php" . $params);
         }
+        $_SESSION['success_msg'] = '登録しました。';
         header( "Location: ../../view/todo/index.php" );
     }
 
@@ -88,12 +91,13 @@ class Todocontroller{
         $detail = $validate_data['detail'];
            
         $todo = new Todo();
-        $todo->todo_id = $_POST['todo_id'];
+        $todo->setTodoId($_POST['todo_id']);
         $todo->setTitle($title);
         $todo->setDetail($detail);
         $param = $_SERVER['QUERY_STRING'];
     
         $todo->update();
+        $_SESSION['success_msg'] = '編集しました。';
         header( "Location: ../../view/todo/index.php" );   
     }
 
@@ -113,13 +117,14 @@ class Todocontroller{
         $todo = new Todo;
         $todo->setTodoId($todo_id);
         $result = $todo->delete();
+        session_start();
         if($result === false) {
-            session_start();
             $_SESSION['error_msgs'] = [
                 sprintf("削除に失敗しました。id=%s", 
                 $todo_id)
             ];
         }
+        $_SESSION['success_msg'] = '削除しました。';
         header("Location: ../../view/todo/index.php");
     }
 }

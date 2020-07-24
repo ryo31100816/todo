@@ -5,22 +5,22 @@ require_once '../../app/controller/Usercontroller.php';
 if($_SERVER["REQUEST_METHOD"] === "POST"){
     $action = Usercontroller::login($_POST['email'],$_POST['password']);
     if($action === true){
-        header('Location: index.php');
+        header('Location: ../todo/index.php');
         return;
     }
 return;
 }
 
-$login_user = $_SESSION['login_user'];
-$username = Usercontroller::h($login_user['username']);
-$email = Usercontroller::h($login_user['email']);
-
 $result = Usercontroller::checkLogin();
 if(!$result){
-    $_SESSION['login_err'] = 'ユーザー登録をしてログインしてください。';
+    $_SESSION['error_msgs'] = 'ユーザー登録をしてログインしてください。';
     header('Location: signup_form.php');
     return;
 }
+
+$login_user = $_SESSION['login_user'];
+$username = Usercontroller::escape($login_user['username']);
+$email = Usercontroller::escape($login_user['email']);
 
 ?>
 

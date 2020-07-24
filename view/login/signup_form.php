@@ -2,10 +2,10 @@
 session_start();
 require_once '../../app/controller/Usercontroller.php';
 
-$csrf_token = Usercontroller::h( Usercontroller::setToken());
+$csrf_token = Usercontroller::escape( Usercontroller::setToken());
 
-$result = Usercontroller::checkLogin();
-if($result){
+$login_status = Usercontroller::checkLogin();
+if($login_status){
     header('Location: mypage.php');
     return;
 }
@@ -32,7 +32,7 @@ unset($_SESSION['error_msgs']);
             <p><?php echo $error_msg ;?></p>
         <?php endforeach ;?>
     <?php endif; ?>
-    <form class="showboard" action="register.php" method="POST">
+    <form class="showboard" action="../user/register.php" method="POST">
         <div  class="board-contents"> 
             <label for="username"><div>User</div></label>
             <div>

@@ -17,7 +17,7 @@ class Usercontroller{
             $error_msgs = $validation->getErrorMessages();
             session_start();
             $_SESSION['error_msgs'] = $error_msgs;
-            header("Location: ../../view/todo/signup_form.php");
+            header("Location: ../../view/login/signup_form.php");
             return;
         }
 
@@ -33,7 +33,7 @@ class Usercontroller{
         $result = $user->new_user();
 
         if($result === false) {
-            header("Location: ../../view/todo/signup_form.php");
+            header("Location: ../../view/login/signup_form.php");
         }
     }
 
@@ -48,7 +48,7 @@ class Usercontroller{
             $error_msgs = $validation->getErrorMessages();
             session_start();
             $_SESSION['error_msgs'] = $error_msgs;
-            header("Location: ../../view/todo/login_form.php");
+            header("Location: ../../view/login/login_form.php");
             return;
         }
         $validate_data = $validation->getData($data);
@@ -69,7 +69,7 @@ class Usercontroller{
         return false;
     }
 
-    public static function checkLogin(){
+    public function checkLogin(){
         if(isset($_SESSION['login_user']) && $_SESSION['login_user'] > 0){
             return true;
         }
@@ -81,7 +81,7 @@ class Usercontroller{
         session_destroy();
     }
 
-    public static function h($str){
+    public static function escape($str){
         return htmlspecialchars($str,ENT_QUOTES,'utf-8');
     }
     

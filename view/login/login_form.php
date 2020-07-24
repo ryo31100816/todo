@@ -1,13 +1,13 @@
 <?php
+session_start();
 require_once '../../app/controller/Usercontroller.php';
 
-session_start();
 $error_msgs = $_SESSION['error_msgs'];
 unset($_SESSION['error_msgs']);
 
 $error= [];
 if($_SERVER["REQUEST_METHOD"] === "POST"){
-    $action = new Usercontroller;
+    $action = new Usercontroller();
     $action->login($_POST['email'],$_POST['password']); 
 }
 

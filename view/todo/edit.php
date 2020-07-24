@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../../app/config/database.php';
 require_once '../../app/model/Todo.php';
 require_once '../../app/controller/Todocontroller.php';
@@ -6,15 +7,6 @@ require_once '../../app/controller/Todocontroller.php';
 $action = new Todocontroller();
 $todo = $action->edit();
 
-session_start();
-$username = $_SESSION['login_user']['username'];
-$user_id = $_SESSION['login_user']['user_id'];
-
-$login_status = Todocontroller::is_login($user_id);
-if(!$login_status){
-    header("Location: login_form.php");
-    return;
-}
 $error_msgs = $_SESSION['error_msgs'];
 unset($_SESSION["error_msgs"]);
 

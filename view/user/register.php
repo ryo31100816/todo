@@ -1,5 +1,4 @@
 <?php
-
 require_once '../../app/controller/Usercontroller.php';
 
 session_start();
@@ -11,8 +10,8 @@ unset($_SESSION['csrf_token']);
 
 $error= [];
 $action = new Usercontroller();
-$action->register();
-if($created){
+$result = $action->register();
+if(!$result){
     $error[] = '登録に失敗しました。';
 }
 
@@ -33,11 +32,11 @@ if($created){
         <?php foreach($error as $e) : ?>
         <p><?php echo $e ?></p>
         <? endforeach ?>
-        <a href="signup_form.php">Signup</a>
+        <a href="../login/signup_form.php">Signup</a>
     <?php else : ?>
         <div class="title">Complete</div>
         <p>ユーザー登録が完了しました。</p>
-        <a href="./login_form.php">To Login</a>
+        <a href="../login/login_form.php">To Login</a>
     <?php endif ?>
 </div>
 </body>
