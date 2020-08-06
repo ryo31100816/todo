@@ -20,7 +20,11 @@ class Todocontroller{
     public function detail(){
         $todo_id = $_GET['todo_id'];
         $todo = Todo::findById($todo_id);
-        return $todo;
+        if($todo){
+            return $todo;
+        }
+        header('Location: ../../view/errors/404.php');
+        return;
     }
 
     public function new(){
@@ -42,7 +46,7 @@ class Todocontroller{
             return;
         }
     
-        $validate_data = $validation->getData($data);
+        $validate_data = $validation->getData();
         $title = $validate_data['title'];
         $detail = $validate_data['detail'];
 
@@ -86,7 +90,7 @@ class Todocontroller{
             return;
         }
          
-        $validate_data = $validation->getData($data);
+        $validate_data = $validation->getData();
         $title = $validate_data['title'];
         $detail = $validate_data['detail'];
            
@@ -126,5 +130,26 @@ class Todocontroller{
         }
         $_SESSION['success_msg'] = '削除しました。';
         header("Location: ../../view/todo/index.php");
+    }
+
+    public function search(){
+        $search_word = htmlspecialchars( $_POST['search'],ENT_QUOTES,'utf-8');
+        $search_comp = $_POST['completed_at'];
+        $validation = new Todovalidation;
+        $validation->setData($search_word);
+        if($validation->checkSearch() === false) {
+            header("Location: ../../view/todo/index.php");
+            return;
+        }
+    
+        $validate_data = $validation->getData();
+        $search_word = $validate_data;
+        session_start();
+        $user_id = $_SESSION['login_user']['user_id'];
+
+        $todo = new Todo();
+        $todo->setUserId($user_id);
+        $todo->setSearch($search_word,$search_comp);
+        return $todo->search();
     }
 }

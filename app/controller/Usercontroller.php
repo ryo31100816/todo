@@ -13,7 +13,7 @@ class Usercontroller{
         );
         $validation = new Uservalidation;
         $validation->setData($data);
-        if($validation->register_check() === false) {
+        if($validation->registerCheck() === false) {
             $error_msgs = $validation->getErrorMessages();
             session_start();
             $_SESSION['error_msgs'] = $error_msgs;
@@ -21,7 +21,7 @@ class Usercontroller{
             return;
         }
 
-        $validate_data = $validation->getData($data);
+        $validate_data = $validation->getData();
         $username = $validate_data['username'];
         $email = $validate_data['email'];
         $password = password_hash($validate_data['password'],PASSWORD_DEFAULT);
@@ -51,7 +51,7 @@ class Usercontroller{
             header("Location: ../../view/login/login_form.php");
             return;
         }
-        $validate_data = $validation->getData($data);
+        $validate_data = $validation->getData();
         $email = $validate_data['email'];
         $password = $validate_data['password'];
 
@@ -90,5 +90,35 @@ class Usercontroller{
         session_start();
         $_SESSION['csrf_token'] = $csrf_token;
         return $csrf_token;
+    }
+    // ポスト　ポスト受け取る　ヴァリデーション　トークン
+    public function preRegister(){
+        $email = $_POST['email'];
+
+        $validation = new Uservalidation;
+        $validation->setData($email);
+        if($validation->preRegisterCheck() === false) {
+            $error_msgs = $validation->getErrorMessages();
+            $_SESSION['error_msgs'] = $error_msgs;
+            header("Location: ../../view/login/pre_signup_form.php");
+            return;
+        }
+        $email = $validation->getData();
+
+        $to = $email;
+        $subject = 'Please Regist Your Account!';
+        $param = sprintf('?token=%s',$_SESSION['csrf_token']);
+        $url = 'http://127.0.0.1:8000/view/login/signup_form.php'.$param;
+        $message = 'Click here URL:'.$url;
+        $from = 'admin@mail.com';
+        $header = "From: ".$from."\r\n";
+        mb_language('Japanese');
+        mb_internal_encoding("UTF-8");
+        $result = mb_send_mail($to,$subject,$message,$header);
+        if($result){
+            $_SESSION['email'] = $email;
+            return true;
+        }
+        return false;
     }
 }

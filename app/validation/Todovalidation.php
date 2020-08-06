@@ -8,7 +8,7 @@ class Todovalidation{
         $this->data = $data;
     }
 
-    public function getData($data){
+    public function getData(){
         return $this->data;
     }
 
@@ -28,6 +28,17 @@ class Todovalidation{
             $this->error_msg[] = '詳細が空です。';
         }
 
+        if(count($this->error_msg) > 0){
+            return false;
+        }
+        return true;
+    }
+
+    public function checkSearch(){
+        $search_word = $this->data;
+        if(empty($search_word)){
+            $this->error_msg[] = '空です。';
+        }
         if(count($this->error_msg) > 0){
             return false;
         }

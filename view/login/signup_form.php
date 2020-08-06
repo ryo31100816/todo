@@ -2,6 +2,11 @@
 session_start();
 require_once '../../app/controller/Usercontroller.php';
 
+$token = filter_input(INPUT_GET,'token');
+if(!isset($_SESSION['csrf_token']) || $token !== $_SESSION['csrf_token']){
+    exit('不正なリクエスト、または新たなトークンが発行されています。');
+}
+
 $csrf_token = Usercontroller::escape( Usercontroller::setToken());
 
 $login_status = Usercontroller::checkLogin();
@@ -10,6 +15,8 @@ if($login_status){
     return;
 }
 
+$email = $_SESSION['email'];
+unset($_SESSION['email']);
 $error_msgs = isset($_SESSION['error_msgs']) ? $_SESSION['error_msgs'] : null;
 unset($_SESSION['error_msgs']);
  
@@ -42,7 +49,7 @@ unset($_SESSION['error_msgs']);
         <div  class="board-contents"> 
             <label for="email"><div>E-mail</div></label>
             <div>
-            <input id="email" class= "board-item" type="email" name="email">
+            <input id="email" class= "board-item" type="email" name="email" value=<?php echo $email; ?>>
             </div>
         </div>
         <div  class="board-contents"> 

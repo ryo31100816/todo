@@ -23,6 +23,11 @@ if(isset($_SESSION['success_msg'])){
     unset($_SESSION['success_msg']);
 }
 
+if($_SERVER["REQUEST_METHOD"] === "POST") {
+    $action = new Todocontroller;
+    $todo_list = $action->search(); 
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -47,6 +52,12 @@ if(isset($_SESSION['success_msg'])){
         <button class="btn" type="submit" name="dlbtn" value="CSV">CSV</buttom>
         </form>
         </div>
+        <form method="POST" action="index.php">
+            <input type="text" name="search">
+            <input type="radio" name="completed_at" value="NOT NULL">完了
+            <input type="radio" name="completed_at" value="NULL" checked>未完了
+            <input type="submit" name="submit" value="Search">
+        </form>
     </div>
     <?php if($todo_list):?>
     <div class="task-container">

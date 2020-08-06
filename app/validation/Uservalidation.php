@@ -8,14 +8,14 @@ class Uservalidation{
         $this->data = $data;
     }
 
-    public function getData($data){
+    public function getData(){
         return $this->data;
     }
 
     public function getErrorMessages(){
         return $this->error_msg;  
     }
-    public function register_check(){
+    public function registerCheck(){
         $username = $this->data['username'];
         $email = $this->data['email'];
         $password = $this->data['password'];
@@ -35,6 +35,19 @@ class Uservalidation{
 
         if($password !== $password_conf){
             $this->error_msg[] = '確認用パスワードと異なります。';
+        }
+        
+        if(count($this->error_msg) > 0){
+            return false;
+        }
+        return true;
+    }
+
+    public function preRegisterCheck(){
+        $email = $this->data;
+   
+        if(!$email){
+            $this->error_msg[] = 'メールアドレスを入力してください。';
         }
         
         if(count($this->error_msg) > 0){
