@@ -127,8 +127,37 @@ class Todocontroller{
                 sprintf("削除に失敗しました。id=%s", 
                 $todo_id)
             ];
+            return;
         }
         $_SESSION['success_msg'] = '削除しました。';
+        header("Location: ../../view/todo/index.php");
+    }
+
+    public function complete(){
+        $todo_id = $_GET['todo_id'];
+        $is_exist = Todo::isExistById($todo_id);
+        if(!$is_exist) {
+            session_start();
+            $_SESSION['error_msgs'] = [
+                sprintf("id=%sに該当するレコードが存在しません",
+                $todo_id)
+            ];
+            header("Location: ../../view/todo/index.php");
+            return;
+        }
+
+        $todo = new Todo;
+        $todo->setTodoId($todo_id);
+        $result = $todo->complete();
+        session_start();
+        if($result === false) {
+            $_SESSION['error_msgs'] = [
+                sprintf("登録に失敗しました。id=%s", 
+                $todo_id)
+            ];
+            return;
+        }
+        $_SESSION['success_msg'] = '完了状態にしました。';
         header("Location: ../../view/todo/index.php");
     }
 

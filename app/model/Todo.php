@@ -1,5 +1,4 @@
 <?php
-// require_once '../../app/config/database.php';
 require_once '../../app/model/Bassmodel.php';
 
 class Todo extends Bassmodel{
@@ -107,8 +106,7 @@ class Todo extends Bassmodel{
     public function update(){
         $query = sprintf("UPDATE `todos` SET title = '%s', detail = '%s' WHERE id = '%s';", 
                     $this->title, $this->detail,$this->todo_id);
-        $dbh = $this->pdo;
-
+        $dbh = $this->dbConnect();
         try {
             $dbh->beginTransaction();
             $stmh = $dbh->prepare($query);
@@ -134,7 +132,7 @@ class Todo extends Bassmodel{
 
     public function delete() {
         $query = sprintf("DELETE FROM todos WHERE id = %s", $this->todo_id);
-        $dbh = $this->pdo;
+        $dbh = $this->dbConnect();
         try {
             $dbh->beginTransaction();
             $stmh = $dbh->prepare($query);
@@ -160,5 +158,19 @@ class Todo extends Bassmodel{
             $todo_list = [];
         }
         return $todo_list;
+    }
+
+    public function complete(){
+        $query = sprintf("UPDATE `todos` SET completed_at = NOW() WHERE id = '%s';",$this->todo_id);
+        $dbh = $this->dbConnect();
+        try {
+            $dbh->beginTransaction();
+            $stmh = $dbh->prepare($query);
+            $stmh->execute();
+            $dbh->commit();
+        } catch(PDOException $e) {
+            $dbh->rollBack();
+            echo $e->getMessage();
+        }
     }
 }

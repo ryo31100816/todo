@@ -11,6 +11,15 @@
     box-shadow: 5px 5px 10px #000;
 }
 
+.search-form{
+    width: 150px;
+    margin-top: 2rem;
+}
+
+.search-item{
+    width: 142px;
+}
+
 .task-container{
     display: flex;
     flex-direction: column;
@@ -31,6 +40,10 @@
 
 .hide{
     display: none;
+}
+
+.completed_at{
+    opacity: 0.5;
 }
 
 .btn{

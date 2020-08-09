@@ -14,6 +14,11 @@ if(isset($_GET['action']) & $_GET['action'] === 'delete') {
     $todo_list = $action->delete();
 }
 
+if(isset($_GET['action']) & $_GET['action'] === 'complete') {
+    $action = new Todocontroller;
+    $todo_list = $action->complete();
+}
+
 $controller = new Todocontroller();
 $username = $_SESSION['login_user']['username'];
 $todo_list = $controller->index();
@@ -52,8 +57,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
         <button class="btn" type="submit" name="dlbtn" value="CSV">CSV</buttom>
         </form>
         </div>
-        <form method="POST" action="index.php">
-            <input type="text" name="search">
+        <form class="search-form" method="POST" action="index.php">
+            <input class="search-item" type="text" name="search">
             <input type="radio" name="completed_at" value="NOT NULL">完了
             <input type="radio" name="completed_at" value="NULL" checked>未完了
             <input type="submit" name="submit" value="Search">
@@ -71,9 +76,14 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
                     <a class="task-item" href="./detail.php?todo_id=<?php echo $todo['id'];?>">
                         <?php echo $todo['title'];?>
                     </a>
+
+                    <a class="complete-btn" data-id="<?php echo $todo['id'];?>">
+                        <i class="far fa-check-square"></i>
+                    </a>
                     <a class="delete-btn" data-id="<?php echo $todo['id'];?>">
                         <i class="far fa-trash-alt"></i>
                     </a>
+                    <a class="complete-status" value="<?php echo $todo['completed_at'] ;?>"></a>
                 </div>
             <?php endforeach;?>
         </ul>

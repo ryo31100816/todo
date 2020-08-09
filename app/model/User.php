@@ -1,21 +1,12 @@
 <?php
-// require_once '../../app/config/database.php';
 require_once '../../app/model/Bassmodel.php';
 
 class User extends Bassmodel{
-    // public $pdo;
 
     private $username;
     private $email;
     private $password;
     private $status;
-
-    // public function __construct(){
-    //     $this->dbConnect();
-    // }
-    // public function dbConnect(){
-    //     $this->pdo = new PDO(DSN, USER, PASSWORD);
-    // }
 
     public function setUsername($username) {
         $this->username = $username;
@@ -37,12 +28,11 @@ class User extends Bassmodel{
         $this->password = $password;
     }
     
-    public function new_User(){
+    public function newUser(){
         $query = sprintf("INSERT INTO `users` (`username`,`email`,`password`)VALUES ('%s','%s','%s');",
             $this->username,$this->email,$this->password
         );
-        $dbh = $this->pdo;
-
+        $dbh = $this->dbConnect();
         try{
             $dbh->beginTransaction();
             $stmh = $dbh->prepare($query);

@@ -30,7 +30,7 @@ class Usercontroller{
         $user->setUsername($username);
         $user->setEmail($email);
         $user->setPassword($password);
-        $result = $user->new_user();
+        $result = $user->newUser();
 
         if($result === false) {
             header("Location: ../../view/login/signup_form.php");
