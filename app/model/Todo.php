@@ -146,20 +146,6 @@ class Todo extends Bassmodel{
         return $result;
     }
 
-    public function search(){
-        $search_word = '%'.$this->search_word.'%';
-        $query = sprintf("SELECT * FROM todos WHERE user_id = %s AND title LIKE '%s' AND completed_at  IS %s;",
-                 $this->user_id, $search_word,$this->search_comp);
-        $dbh = $this->dbConnect();
-        $stmh =$dbh->query($query);
-        if($stmh){
-            $todo_list = $stmh->fetchAll(PDO::FETCH_ASSOC);
-        }else{
-            $todo_list = [];
-        }
-        return $todo_list;
-    }
-
     public function complete(){
         $query = sprintf("UPDATE `todos` SET completed_at = NOW() WHERE id = '%s';",$this->todo_id);
         $dbh = $this->dbConnect();

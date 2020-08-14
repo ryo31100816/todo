@@ -14,7 +14,32 @@ class Todocontroller{
 
     public function index(){
         $user_id = $_SESSION['login_user']['user_id'];
+        if(isset($_GET['search'])){
+            $search_word = '%'.$_GET['word'].'%';
+            $search_word = $this->search($search_word);
+            $search_comp = $_GET['completed_at'];
+            $query = $this->getQuery($user_id,$search_word,$search_comp);
+            return Todo::findByQuery($query);
+        }
         return Todo::findAll($user_id);
+    }
+
+    public function getQuery($user_id,$search_word,$search_comp){
+        $query = sprintf("SELECT * FROM todos WHERE user_id = %s AND title LIKE '%s' AND completed_at  IS %s;",
+            $user_id, $search_word,$search_comp);
+        return $query;
+    }
+
+    public function search($search_word){
+        $search_word = htmlspecialchars($search_word,ENT_QUOTES,'utf-8');
+        $validation = new Todovalidation;
+        $validation->setData($search_word);
+        if($validation->checkSearch() === false) {
+            header("Location: ../../view/todo/index.php");
+            return;
+        }
+        $validate_data = $validation->getData();
+        return $validate_data;
     }
 
     public function detail(){
@@ -161,24 +186,4 @@ class Todocontroller{
         header("Location: ../../view/todo/index.php");
     }
 
-    public function search(){
-        $search_word = htmlspecialchars( $_POST['search'],ENT_QUOTES,'utf-8');
-        $search_comp = $_POST['completed_at'];
-        $validation = new Todovalidation;
-        $validation->setData($search_word);
-        if($validation->checkSearch() === false) {
-            header("Location: ../../view/todo/index.php");
-            return;
-        }
-    
-        $validate_data = $validation->getData();
-        $search_word = $validate_data;
-        session_start();
-        $user_id = $_SESSION['login_user']['user_id'];
-
-        $todo = new Todo();
-        $todo->setUserId($user_id);
-        $todo->setSearch($search_word,$search_comp);
-        return $todo->search();
-    }
 }

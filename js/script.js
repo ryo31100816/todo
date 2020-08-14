@@ -19,8 +19,7 @@ function toArray(nodeList) {
  }
  let elements = document.querySelectorAll('.complete-status');
  toArray(elements).forEach(function(element) {
-   console.log(element);
-   var status = element.getAttribute('value');
+   let status = element.getAttribute('value');
    console.log(status);
    if(typeof status !== 'undefined' && status !== ''){
       element.parentNode.classList.add('completed_at');

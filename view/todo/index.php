@@ -21,16 +21,12 @@ if(isset($_GET['action']) & $_GET['action'] === 'complete') {
 
 $controller = new Todocontroller();
 $username = $_SESSION['login_user']['username'];
+$user_id = $_SESSION['login_user']['user_id'];
 $todo_list = $controller->index();
 
 if(isset($_SESSION['success_msg'])){
     $success_msg = $_SESSION['success_msg'];
     unset($_SESSION['success_msg']);
-}
-
-if($_SERVER["REQUEST_METHOD"] === "POST") {
-    $action = new Todocontroller;
-    $todo_list = $action->search(); 
 }
 
 ?>
@@ -53,15 +49,16 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
         <div><a href="../login/mypage.php" class="login-user"><?php echo $username; ?></a></div>
         <div><a href="./new.php" class="btn new-btn">NEW</a></div>
         <div>
-        <form method="POST" action="output_csv.php">
-        <button class="btn" type="submit" name="dlbtn" value="CSV">CSV</buttom>
+        <form id="csv" method="POST">
+        <input type="hidden" name="userid" value="<?php echo $user_id;?>">
+        <button id="request" class="btn" type="submit">CSV</button>
         </form>
         </div>
-        <form class="search-form" method="POST" action="index.php">
-            <input class="search-item" type="text" name="search">
+        <form class="search-form" method="GET" action="index.php">
+            <input class="search-item" type="text" name="word">
             <input type="radio" name="completed_at" value="NOT NULL">完了
             <input type="radio" name="completed_at" value="NULL" checked>未完了
-            <input type="submit" name="submit" value="Search">
+            <input type="submit" name="search" value="Search">
         </form>
     </div>
     <?php if($todo_list):?>
@@ -93,6 +90,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php endif;?>
 </div>    
 </body>
-<script type="text/javascript" src="/js/script.js?date=20190401"></script>
+<script type="text/javascript" src="/js/script.js"></script>
+<script type="text/javascript" src="/js/ajax_csv.js"></script>
 </html>
 

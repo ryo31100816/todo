@@ -91,10 +91,9 @@ class Usercontroller{
         $_SESSION['csrf_token'] = $csrf_token;
         return $csrf_token;
     }
-    // ポスト　ポスト受け取る　ヴァリデーション　トークン
+
     public function preRegister(){
         $email = $_POST['email'];
-
         $validation = new Uservalidation;
         $validation->setData($email);
         if($validation->preRegisterCheck() === false) {
@@ -103,22 +102,42 @@ class Usercontroller{
             header("Location: ../../view/login/pre_signup_form.php");
             return;
         }
+        $user = new User();
         $email = $validation->getData();
-
-        $to = $email;
-        $subject = 'Please Regist Your Account!';
-        $param = sprintf('?token=%s',$_SESSION['csrf_token']);
-        $url = 'http://127.0.0.1:8000/view/login/signup_form.php'.$param;
-        $message = 'Click here URL:'.$url;
-        $from = 'admin@mail.com';
-        $header = "From: ".$from."\r\n";
-        mb_language('Japanese');
-        mb_internal_encoding("UTF-8");
-        $result = mb_send_mail($to,$subject,$message,$header);
+        $user->setEmail($email);
+        $token = Usercontroller::escape(Usercontroller::setToken());
+        $user->settoken($token);
+        $result = $user->preRegister();
         if($result){
-            $_SESSION['email'] = $email;
+            $to = $email;
+            $subject = 'Please Regist Your Account!';
+            $param = sprintf('?token=%s', $token);
+            $url = 'http://127.0.0.1:8000/view/login/signup_form.php'.$param;
+            $message = 'Click here URL:'.$url;
+            $from = 'admin@mail.com';
+            $header = "From: ".$from."\r\n";
+            mb_language('Japanese');
+            mb_internal_encoding("UTF-8");
+            $send_result = mb_send_mail($to,$subject,$message,$header);
+        }
+        if($send_result){
             return true;
         }
         return false;
+    }
+
+    public function checkpreRegist(){
+        $token = $_GET['token'];
+        $user = User::getUserByToken($token);
+        if($user['token']){
+            $_SESSION['error_msgs'] [] = 'トークンが正しくありません。';
+            return;
+        }
+        $time_up = date($user['token_registed_at'],strtotime(TOKEN_LIMIT)) < date('Y-m-d h:i:s');
+        if($time_up){
+            $_SESSION['error_msgs'] [] = 'トークンの有効期限が切れています。再登録してください。';
+            return;
+        }
+        return true;
     }
 }

@@ -3,8 +3,16 @@ session_start();
 require_once '../../app/controller/Usercontroller.php';
 
 $token = filter_input(INPUT_GET,'token');
-if(!isset($_SESSION['csrf_token']) || $token !== $_SESSION['csrf_token']){
-    exit('不正なリクエスト、または新たなトークンが発行されています。');
+if(isset($token)){
+    $action = new Usercontroller();
+    $result = $action->checkpreRegist();
+}else{
+    exit('不正なリクエストです。');
+}
+if(!$result){
+    foreach( $_SESSION['error_msgs'] as $error_msg)
+    echo $error_msg.PHP_EOL;
+    exit();
 }
 
 $csrf_token = Usercontroller::escape( Usercontroller::setToken());
@@ -15,8 +23,6 @@ if($login_status){
     return;
 }
 
-$email = $_SESSION['email'];
-unset($_SESSION['email']);
 $error_msgs = isset($_SESSION['error_msgs']) ? $_SESSION['error_msgs'] : null;
 unset($_SESSION['error_msgs']);
  
