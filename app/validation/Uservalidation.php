@@ -17,16 +17,11 @@ class Uservalidation{
     }
     public function registerCheck(){
         $username = $this->data['username'];
-        $email = $this->data['email'];
         $password = $this->data['password'];
         $password_conf = $this->data['password_conf'];
 
         if(!$username){
             $this->error_msg[] = 'ユーザー名を入力してください。';
-        }
-
-        if(!$email){
-            $this->error_msg[] = 'メールアドレスを入力してください。';
         }
 
         if(!preg_match("/\A[a-z\d]{8,20}+\z/i",$password)){

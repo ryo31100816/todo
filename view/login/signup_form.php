@@ -10,8 +10,10 @@ if(isset($token)){
     exit('不正なリクエストです。');
 }
 if(!$result){
-    foreach( $_SESSION['error_msgs'] as $error_msg)
-    echo $error_msg.PHP_EOL;
+    foreach( $_SESSION['error_msgs'] as $error_msg){
+        echo $error_msg.PHP_EOL;
+    }
+    unset($_SESSION['error_msgs']);
     exit();
 }
 
@@ -50,12 +52,6 @@ unset($_SESSION['error_msgs']);
             <label for="username"><div>User</div></label>
             <div>
             <input id="username" class= "board-item" type="text" name="username">
-            </div>
-        </div>
-        <div  class="board-contents"> 
-            <label for="email"><div>E-mail</div></label>
-            <div>
-            <input id="email" class= "board-item" type="email" name="email" value=<?php echo $email; ?>>
             </div>
         </div>
         <div  class="board-contents"> 

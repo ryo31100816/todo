@@ -7,7 +7,6 @@ class Usercontroller{
     public function register(){
         $data = array(
             'username' => $_POST['username'],
-            'email' => $_POST['email'],
             'password' => $_POST['password'],
             'password_conf' => $_POST['password_conf']
         );
@@ -22,19 +21,19 @@ class Usercontroller{
         }
 
         $validate_data = $validation->getData();
+        $user_id = $_SESSION['pre_user']['user_id'];
         $username = $validate_data['username'];
-        $email = $validate_data['email'];
         $password = password_hash($validate_data['password'],PASSWORD_DEFAULT);
 
         $user = new User();
+        $user->setUserId($user_id);
         $user->setUsername($username);
-        $user->setEmail($email);
         $user->setPassword($password);
         $result = $user->newUser();
-
         if($result === false) {
             header("Location: ../../view/login/signup_form.php");
         }
+        return true;
     }
 
     public static function login($email,$password){
@@ -113,7 +112,7 @@ class Usercontroller{
             $subject = 'Please Regist Your Account!';
             $param = sprintf('?token=%s', $token);
             $url = 'http://127.0.0.1:8000/view/login/signup_form.php'.$param;
-            $message = 'Click here URL:'.$url;
+            $message = 'Click this URL:'.$url;
             $from = 'admin@mail.com';
             $header = "From: ".$from."\r\n";
             mb_language('Japanese');
@@ -129,15 +128,18 @@ class Usercontroller{
     public function checkpreRegist(){
         $token = $_GET['token'];
         $user = User::getUserByToken($token);
-        if($user['token']){
+        if($token !== $user['token']){
             $_SESSION['error_msgs'] [] = 'トークンが正しくありません。';
             return;
         }
-        $time_up = date($user['token_registed_at'],strtotime(TOKEN_LIMIT)) < date('Y-m-d h:i:s');
-        if($time_up){
+        $now_time = date('Y-m-d h:i:s');
+        $registed_time = date($user['token_registed_at']);
+        $diff_hour = (strtotime($now_time) - strtotime($registed_time));      
+        if($diff_hour > TOKEN_LIMIT){
             $_SESSION['error_msgs'] [] = 'トークンの有効期限が切れています。再登録してください。';
             return;
         }
+        $_SESSION['pre_user'] = $user;
         return true;
     }
 }

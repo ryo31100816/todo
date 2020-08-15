@@ -3,10 +3,15 @@ require_once '../../app/model/Bassmodel.php';
 
 class User extends Bassmodel{
 
+    private $user_id;
     private $username;
     private $email;
     private $password;
     private $token;
+
+    public function setUserId($user_id) {
+        $this->user_id = $user_id;
+    }
 
     public function setUsername($username) {
         $this->username = $username;
@@ -33,7 +38,7 @@ class User extends Bassmodel{
     }
 
     public function preRegister(){
-        $query = sprintf("INSERT INTO users (email, created_at, updated_at, token, token_registed_at)VALUES (%s, NOW(), NOW(), %s, NOW());",
+        $query = sprintf("INSERT INTO `users` (`email`, `created_at`, `updated_at`, `token`, `token_registed_at`) VALUES ('%s', NOW(), NOW(), '%s', NOW());",
             $this->email, $this->token
         );
         $dbh = $this->dbConnect();
@@ -50,8 +55,8 @@ class User extends Bassmodel{
     }
     
     public function newUser(){
-        $query = sprintf("INSERT INTO `users` (`username`,`email`,`password`)VALUES ('%s','%s','%s');",
-            $this->username,$this->email,$this->password
+        $query = sprintf("UPDATE `users` SET `username` = '%s', `password` = '%s' WHERE `user_id` = '%s';",
+            $this->username,$this->password,$this->user_id
         );
         $dbh = $this->dbConnect();
         try{

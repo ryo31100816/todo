@@ -14,7 +14,7 @@ $result = $action->register();
 if(!$result){
     $error[] = '登録に失敗しました。';
 }
-
+unset($_SESSION['pre_user']);
 ?>
 
 <!DOCTYPE html>
