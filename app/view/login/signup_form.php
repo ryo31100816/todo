@@ -1,10 +1,11 @@
 <?php
 session_start();
-require_once '../../app/controller/Usercontroller.php';
+require_once '../../controller/UserController.php';
+require_once '../../controller/LoginController.php';
 
 $token = filter_input(INPUT_GET,'token');
 if(isset($token)){
-    $action = new Usercontroller();
+    $action = new UserController();
     $result = $action->checkpreRegist();
 }else{
     exit('不正なリクエストです。');
@@ -17,9 +18,9 @@ if(!$result){
     exit();
 }
 
-$csrf_token = Usercontroller::escape( Usercontroller::setToken());
+$csrf_token = UserController::escape( UserController::setToken());
 
-$login_status = Usercontroller::checkLogin();
+$login_status = LoginController::checkLogin();
 if($login_status){
     header('Location: mypage.php');
     return;
@@ -31,7 +32,7 @@ unset($_SESSION['error_msgs']);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -70,6 +71,7 @@ unset($_SESSION['error_msgs']);
         <p><input type="submit" value="sinup"></p>
     </form>
     <a href="./login_form.php">Login</a>
+
 </div>
 </body>
 </html>

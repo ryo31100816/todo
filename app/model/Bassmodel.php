@@ -1,5 +1,5 @@
 <?php
-require_once '../../app/config/database.php';
+require_once '../../config/database.php';
 
 class Bassmodel{
     public function __construct(){

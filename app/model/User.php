@@ -1,8 +1,9 @@
 <?php
-require_once '../../app/model/Bassmodel.php';
+require_once '../../model/Bassmodel.php';
 
 class User extends Bassmodel{
 
+    const TOKEN_LIMIT = 3600;
     private $user_id;
     private $username;
     private $email;

@@ -1,10 +1,10 @@
 <?php
 session_start();
-require_once '../../app/controller/Usercontroller.php';
+require_once '../../controller/LoginController.php';
 
-$csrf_token = Usercontroller::escape(Usercontroller::setToken());
+$csrf_token = LoginController::escape(LoginController::setToken());
 
-$login_status = Usercontroller::checkLogin();
+$login_status = LoginController::checkLogin();
 if($login_status){
     header('Location: mypage.php');
     return;
@@ -16,7 +16,7 @@ unset($_SESSION['error_msgs']);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">

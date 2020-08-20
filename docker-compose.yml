@@ -23,10 +23,12 @@ services:
       MYSQL_USER: Ryo
       MYSQL_PASSWORD: ryo3110
       MYSQL_ROOT_PASSWORD: alexi3110
+      TZ: "Asia/Tokyo"
     ports:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
   mailhog:
     image: mailhog/mailhog
     ports:

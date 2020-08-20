@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../../app/controller/Todocontroller.php';
+require_once '../../controller/TodoController.php';
 
 try {
     $dbh = new PDO(DSN, USER, PASSWORD);
@@ -10,16 +10,16 @@ try {
 }
      
 if(isset($_GET['action']) & $_GET['action'] === 'delete') {
-    $action = new Todocontroller;
-    $todo_list = $action->delete();
+    $action = new TodoController;
+    $todo_list = $aCtion->delete();
 }
 
 if(isset($_GET['action']) & $_GET['action'] === 'complete') {
-    $action = new Todocontroller;
+    $action = new TodoController;
     $todo_list = $action->complete();
 }
 
-$controller = new Todocontroller();
+$controller = new TodoController();
 $username = $_SESSION['login_user']['username'];
 $user_id = $_SESSION['login_user']['user_id'];
 $todo_list = $controller->index();
@@ -30,7 +30,6 @@ if(isset($_SESSION['success_msg'])){
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -51,6 +50,7 @@ if(isset($_SESSION['success_msg'])){
         <div>
         <form id="csv" method="POST">
         <input type="hidden" name="userid" value="<?php echo $user_id;?>">
+        <input type="hidden" name="csv-action" value="csv-action">
         <button id="request" class="btn" type="submit">CSV</button>
         </form>
         </div>

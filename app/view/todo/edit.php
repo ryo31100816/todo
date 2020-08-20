@@ -1,10 +1,10 @@
 <?php
 session_start();
-require_once '../../app/config/database.php';
-require_once '../../app/model/Todo.php';
-require_once '../../app/controller/Todocontroller.php';
+require_once '../../config/database.php';
+require_once '../../model/Todo.php';
+require_once '../../controller/TodoController.php';
 
-$action = new Todocontroller();
+$action = new TodoController();
 $todo = $action->edit();
 
 $error_msgs = $_SESSION['error_msgs'];

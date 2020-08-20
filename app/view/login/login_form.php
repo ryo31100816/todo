@@ -1,20 +1,23 @@
 <?php
 session_start();
-require_once '../../app/controller/Usercontroller.php';
+require_once '../../controller/LoginController.php';
+
+
+if($_SERVER["REQUEST_METHOD"] === "POST"){
+    $action = LoginController::login();
+    if($action === true){
+        header('Location: ../todo/index.php');
+    }
+   return;
+}
 
 $error_msgs = $_SESSION['error_msgs'];
 unset($_SESSION['error_msgs']);
 
-$error= [];
-if($_SERVER["REQUEST_METHOD"] === "POST"){
-    $action = new Usercontroller();
-    $action->login($_POST['email'],$_POST['password']); 
-}
-
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +29,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 <body>
 <div class="wrapper-container">
     <div class="title">Login</div>
-    <form class="showboard" method="POST" action="mypage.php">
+    <form class="showboard" method="POST" action="login_form.php">
         <div  class="board-contents"> 
             <div>E-mail</div>
             <div>

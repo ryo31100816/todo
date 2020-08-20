@@ -1,14 +1,14 @@
 <?php
 session_start();
-require_once '../../app/controller/Todocontroller.php';
+require_once '../../controller/TodoController.php';
 
-new Todocontroller();
+new TodoController();
 $user_id = $_SESSION['login_user']['user_id'];
 $error_msgs = $_SESSION['error_msgs'];
 unset($_SESSION["error_msgs"]);
 
 if($_SERVER["REQUEST_METHOD"] === "POST") {
-    $action = new Todocontroller;
+    $action = new TodoController;
     $action->new(); 
 }
 
@@ -24,7 +24,7 @@ if($_SERVER["REQUEST_METHOD"] === "GET") {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">

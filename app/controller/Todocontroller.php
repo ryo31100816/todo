@@ -1,8 +1,8 @@
 <?php
-require_once '../../app/model/Todo.php';
-require_once '../../app/validation/Todovalidation.php';
+require_once '../../model/Todo.php';
+require_once '../../validation/TodoValidation.php';
 
-class Todocontroller{
+class TodoController{
 
     public function __construct(){
         if(isset($_SESSION['login_user']) && $_SESSION['login_user'] > 0){
@@ -32,7 +32,7 @@ class Todocontroller{
 
     public function search($search_word){
         $search_word = htmlspecialchars($search_word,ENT_QUOTES,'utf-8');
-        $validation = new Todovalidation;
+        $validation = new TodoValidation;
         $validation->setData($search_word);
         if($validation->checkSearch() === false) {
             header("Location: ../../view/todo/index.php");
@@ -58,7 +58,7 @@ class Todocontroller{
             "title" => $_POST['title'],
             "detail" => $_POST['detail']
         );
-        $validation = new Todovalidation;
+        $validation = new TodoValidation;
         $validation->setData($data);
         if($validation->check() === false) {
   
@@ -101,7 +101,7 @@ class Todocontroller{
             "detail" => $_POST['detail'],
         );
 
-        $validation = new Todovalidation;
+        $validation = new TodoValidation;
         $validation->setData($data);
         if($validation->check() === false) {
             $error_msgs = $validation->getErrorMessages();
@@ -184,6 +184,18 @@ class Todocontroller{
         }
         $_SESSION['success_msg'] = '完了状態にしました。';
         header("Location: ../../view/todo/index.php");
+    }
+
+    public static function outputCSV(){
+        $todo = new Todo();
+        $dbh = $todo->dbConnect();
+        $user_id = $_POST['userid'];
+        $query = sprintf('SELECT * FROM todos WHERE user_id = %s;',$user_id);
+        $stmh = $dbh->query($query);
+        $todo_list = $stmh->fetchAll(PDO::FETCH_ASSOC);
+
+        header("Content-Type: application/json; charset=UTF-8");
+        return json_encode($todo_list);
     }
 
 }

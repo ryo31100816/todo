@@ -1,6 +1,6 @@
 <?php
 
-class Todovalidation{
+class TodoValidation{
     private $data;
     private $error_msg = array();
 

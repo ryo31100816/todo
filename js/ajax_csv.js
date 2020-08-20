@@ -43,7 +43,8 @@ $(function(){
             const a = document.createElement('a');
             document.body.appendChild(a);
             a.style = "display:none";
-            const blob = new Blob([csv_line], { type: 'octet/stream' });
+            let bom  = new Uint8Array([0xEF, 0xBB, 0xBF]);
+            const blob = new Blob([bom,csv_line], { type: 'octet/stream' });
             const url = window.URL.createObjectURL(blob);
             a.href = url;
             a.download = 'todo_list.csv';
