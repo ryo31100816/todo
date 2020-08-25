@@ -1,5 +1,5 @@
 <?php
-require_once '../../model/Bassmodel.php';
+require_once '../../app/model/Bassmodel.php';
 
 class Todo extends Bassmodel{
     private $todo_id;

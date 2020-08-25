@@ -18,7 +18,7 @@ $todo = $action->detail();
         <title>Detail</title>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
         <link rel="stylesheet" href="/css/normalize.css">
-        <link rel="stylesheet" href="/css/stylesheet-new.css">
+        <link rel="stylesheet" href="/css/stylesheet.css">
     </head>
 <body>
 <div class="wrapper-container">
@@ -28,13 +28,13 @@ $todo = $action->detail();
         <div  class="board-contents"> 
             <div>Title</div>
             <div>
-                <a class="board-item"><?php echo $todo["title"];?></a>
+                <a class="board-item border-btm"><?php echo $todo["title"];?></a>
             </div>
         </div>
         <div  class="board-contents"> 
             <div>Detail</div>
             <div>       
-                <a class="board-item"><?php echo $todo["detail"];?></a>
+                <a class="board-item border-btm"><?php echo $todo["detail"];?></a>
             </div>
         </div>    
         <button type="submit"><a href="./edit.php?todo_id=<?php echo $todo['id'];?>"> To Edit</a></button>      

@@ -32,7 +32,7 @@ if($_SERVER["REQUEST_METHOD"] === "GET") {
         <title>NEW</title>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
         <link rel="stylesheet" href="/css/normalize.css">
-        <link rel="stylesheet" href="/css/stylesheet-new.css">
+        <link rel="stylesheet" href="/css/stylesheet.css">
     </head>
 <body>
     <?php if($error_msgs):?>

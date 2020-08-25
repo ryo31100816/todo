@@ -16,8 +16,13 @@ body{
     align-items: center;
     width: 50%; 
     margin: auto;
-    border-radius: 10px;
-    box-shadow: 5px 5px 10px #000;
+    border-radius: 0.5rem;
+    box-shadow: 0.3rem 0.3rem 0.5rem #000;
+}
+
+.title{
+    font-size: 2.5rem;
+    height: 30%;
 }
 
 .showboard{
@@ -26,17 +31,16 @@ body{
     margin: 1rem auto;
 }
 
-.title{
-    font-size: 2.5rem;
-    height: 30%;
-}
-
 .board-contents{
     margin-bottom: 2rem;
 }
 
 .board-item{
     width: 100%;
+}
+
+.border-btm{
+    border-bottom: medium solid #49a9d4;
 }
 
 button{
