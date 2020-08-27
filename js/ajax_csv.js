@@ -6,7 +6,7 @@ $(function(){
         console.log($form.serialize());
         let $button = $('#request');
         $.ajax({
-            url: '../todo/output_csv.php', //送信先
+            url: '../app/bin/output_csv.php', //送信先
             type: 'POST', //送信方法\
             dataType: 'json',
             data: $form.serialize(),
@@ -20,41 +20,10 @@ $(function(){
                 $button.attr('disabled', false);
             }
         })// Ajax通信が成功した時
-        .done( function(todo_data, textStatus, jqXHR) {
+        .done( function(result, textStatus, jqXHR) {
             console.log('通信成功');
-            console.log(todo_data);
-            const header_line = Object.keys(todo_data[0]) + '\n';
-            let csv_line = header_line;
-            let line = '';
-            for(i = 0; i < todo_data.length; i++){
-                line += todo_data[i].id + ',';
-                line += todo_data[i].title + ',';
-                line += todo_data[i].detail + ',';
-                line += todo_data[i].status + ',';
-                line += todo_data[i].user_id + ',';
-                line += todo_data[i].completed_at + ',';
-                line += todo_data[i].created_at + ',';
-                line += todo_data[i].updated_at + ',';
-                line += todo_data[i].deleted_at + '\n';
-                csv_line += line;
-                line = '';
-            }
-            console.log(csv_line);
-            const a = document.createElement('a');
-            document.body.appendChild(a);
-            a.style = "display:none";
-            let bom  = new Uint8Array([0xEF, 0xBB, 0xBF]);
-            const blob = new Blob([bom,csv_line], { type: 'octet/stream' });
-            const url = window.URL.createObjectURL(blob);
-            a.href = url;
-            a.download = 'todo_list.csv';
-            a.click();
-            window.URL.revokeObjectURL(url);
-            a.parentNode.removeChild(a);
-
-            // $("#success-msg").text(data);
-            // $("#success-msg").slideToggle(200);
-            // $("#success-msg").delay(5000).slideToggle(200);
+            console.log(result);
+           
         })
         // Ajax通信が失敗した時
         .fail( function(jqXHR, textStatus, errorThrown) {

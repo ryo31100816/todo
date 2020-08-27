@@ -1,7 +1,11 @@
 <?php
 require_once '../model/Todo.php';
 
-$user_id = $argv[1];
+$cmd = 'php /bin/output_csv.php > /dev/null &';
+exec($cmd);
+
+$user_id = $_POST['userid'];
+// $user_id = $argv[1];
 $output_path = './tmp/';
 $filename = sprintf('todo_list_userid=%s_%s.csv',$user_id,date('Ymd',time()));
 $csv_place = $output_path.$filename;
@@ -10,15 +14,18 @@ $file_status = 'file_status.txt';
 $status_place = $output_path.$file_status;
 $status_fp = fopen($status_place,'w');
 
-$status = sprintf('status = 1, ファイル名 = %s, 更新時間 = %s',$filename,date('H:i:s',time()));
-fwrite($status_fp,$status);
+function updateStatus($status, $status_fp, $filename) {
+    rewind($status_fp);
+    $status_line = sprintf('status = %s, ファイル名 = %s, 更新時間 = %s',$status,$filename,date('H:i:s',time()));
+    fwrite($status_fp,$status_line);
+}
+
+updateStatus($status = 1, $status_fp, $filename);
 
 $query = sprintf('SELECT * FROM todos WHERE user_id = %s;',$user_id);
 $todo_lists = Todo::findBYQuery($query);
 
-rewind($status_fp);
-$status = sprintf('status = 2, ファイル名 = %s, 更新時間 = %s',$filename,date('H:i:s',time()));
-fwrite($status_fp,$status);
+updateStatus($status = 2 ,$status_fp, $filename);
 
 $fp = fopen($csv_place,'w');
 if($fp){
@@ -32,13 +39,11 @@ if($fp){
 }
 $result = fclose($fp);
 if($result){
-    rewind($status_fp);
-    $status = sprintf('status = 3, ファイル名 = %s,件数 = %s, 更新時間 = %s',$filename,$count,date('H:i:s',time()));
-    fwrite($status_fp,$status);
+    updateStatus($status = 3, $status_fp, $filename);
     fclose($status_fp);
+    return true;
 }else{
-    rewind($status_fp);
-    $status = sprintf('status = ERROR, ファイル名 = %s, 更新時間 = %s',$filename,date('H:i:s',time()));
-    fwrite($status_fp,$status);
+    updateStatus($status = 4, $status_fp, $filename);
     fclose($status_fp);
+    return false;
 }
