@@ -1,5 +1,5 @@
 <?php
-require_once '../../model/Bassmodel.php';
+require_once 'Bassmodel.php';
 
 class User extends Bassmodel{
 

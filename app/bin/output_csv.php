@@ -1,11 +1,10 @@
 <?php
 require_once '../model/Todo.php';
 
-$cmd = 'php /bin/output_csv.php > /dev/null &';
-exec($cmd);
+// $cmd = 'php /var/www/html/app/bin/output_csv.php > /dev/null &';
+// exec($cmd);
 
 $user_id = $_POST['userid'];
-// $user_id = $argv[1];
 $output_path = './tmp/';
 $filename = sprintf('todo_list_userid=%s_%s.csv',$user_id,date('Ymd',time()));
 $csv_place = $output_path.$filename;
@@ -16,7 +15,7 @@ $status_fp = fopen($status_place,'w');
 
 function updateStatus($status, $status_fp, $filename) {
     rewind($status_fp);
-    $status_line = sprintf('status = %s, ファイル名 = %s, 更新時間 = %s',$status,$filename,date('H:i:s',time()));
+    $status_line = sprintf('status = %s, filename = %s, update = %s',$status,$filename,date('H:i:s',time()));
     fwrite($status_fp,$status_line);
 }
 
@@ -41,9 +40,11 @@ $result = fclose($fp);
 if($result){
     updateStatus($status = 3, $status_fp, $filename);
     fclose($status_fp);
-    return true;
+    echo true;
+    return;
 }else{
     updateStatus($status = 4, $status_fp, $filename);
     fclose($status_fp);
-    return false;
+    echo false;
+    return;
 }
