@@ -1,8 +1,8 @@
 <?php
+
 session_start();
-
 $download_csv = sprintf('/app/bin/tmp/%s', $_SESSION['download_csv']);
-
+$comp_time = $_SESSION['comp_time'];
 ?>
 
 <!DOCTYPE html>
@@ -23,6 +23,7 @@ $download_csv = sprintf('/app/bin/tmp/%s', $_SESSION['download_csv']);
         <?php if($download_csv) : ?>
             <a>作成完了</a>
             <a href=<?php echo $download_csv; ?>>todo_list.csv</a>
+            <p><?php echo $comp_time; ?></p>
         <?php else : ?>
             <a>作成中・・・</a>
         <? endif ?>

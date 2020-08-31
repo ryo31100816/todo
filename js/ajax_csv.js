@@ -6,8 +6,8 @@ $(function(){
         console.log($form.serialize());
         let $button = $('#request');
         $.ajax({
-            url: '../../bin/output_csv.php', //実行するviewからみたパス
-            type: 'POST', //送信方法\
+            url: './output_csv.php', //実行するviewからみたパス
+            type: 'POST', //送信方法
             dataType: 'text',
             data: $form.serialize(),
             timeout: 10000,
@@ -21,20 +21,20 @@ $(function(){
             }
         })// Ajax通信が成功した時
         .done( function(result, textStatus, jqXHR) {
-            console.log('通信成功');
+            console.log('作成バッチ通信成功');
             console.log(result);
             let status_check;
             function startTimer(){
                 status_check = setInterval(function(){
                     $.ajax({
                         url: './check_csv_status.php', //実行するviewからみたパス
-                        type: 'POST', //送信方法\
+                        type: 'POST', //送信方法
                         dataType: 'text',
                         data: '',
                         timeout: 10000,
                     })
                     .done(function(result, textStatus, jqXHR){
-                        console.log('通信成功');
+                        console.log('ステータス確認通信成功');
                         console.log(result);
                         stopTimer();
                     })

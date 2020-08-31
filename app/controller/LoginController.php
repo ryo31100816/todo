@@ -23,16 +23,16 @@ class LoginController{
         $password = $validate_data['password'];
 
         $user = User::getUserByEmail($email);
-        if(!$user){
-            $_SESSION['error_msgs'] = 'emailが一致しません。';
-            return false;
-        }
         if(password_verify($password,$user['password'])){
             session_regenerate_id(true);
             $_SESSION['login_user'] = $user;
             return true;
         }
-        $_SESSION['error_msgs'] = 'パスワードが一致しません。';
+        if(!$user){
+            $_SESSION['error_msgs']['email'] = 'emailが一致しません。';
+            return false;
+        }
+        $_SESSION['error_msgs']['password'] = 'パスワードが一致しません。';
         return false;
     }
 

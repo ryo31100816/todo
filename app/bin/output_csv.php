@@ -1,11 +1,8 @@
 <?php
-require_once '../model/Todo.php';
+require_once '/var/www/html/app/model/Todo.php';
 
-// $cmd = 'php /var/www/html/app/bin/output_csv.php > /dev/null &';
-// exec($cmd);
-
-$user_id = $_POST['userid'];
-$output_path = './tmp/';
+$user_id = $argv[1];
+$output_path = '/var/www/html/app/bin/tmp/';
 $filename = sprintf('todo_list_userid=%s_%s.csv',$user_id,date('Ymd',time()));
 $csv_place = $output_path.$filename;
 
@@ -24,7 +21,7 @@ updateStatus($status = 1, $status_fp, $filename);
 $query = sprintf('SELECT * FROM todos WHERE user_id = %s;',$user_id);
 $todo_lists = Todo::findBYQuery($query);
 
-updateStatus($status = 2 ,$status_fp, $filename);
+updateStatus($status = 2, $status_fp, $filename);
 
 $fp = fopen($csv_place,'w');
 if($fp){

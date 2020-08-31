@@ -1,8 +1,7 @@
 <?php
-require_once '../../controller/TodoController.php';
 
 if(isset($_POST['csv-action'])){
-
-    echo TodoController::outputCSV();
-    
+    $user_id = $_POST['userid']; 
+    $cmd = "php /var/www/html/app/bin/output_csv.php ${user_id} > /dev/null &";
+    exec($cmd);
 }

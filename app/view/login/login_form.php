@@ -7,8 +7,8 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     $action = LoginController::login();
     if($action === true){
         header('Location: ../todo/index.php');
+        return;
     }
-   return;
 }
 
 $error_msgs = $_SESSION['error_msgs'];
