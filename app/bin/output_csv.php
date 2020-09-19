@@ -17,20 +17,25 @@ function updateStatus($status, $status_fp, $filename) {
 }
 
 updateStatus($status = 1, $status_fp, $filename);
-
 $query = sprintf('SELECT * FROM todos WHERE user_id = %s;',$user_id);
-$todo_lists = Todo::findBYQuery($query);
+$stmh_result = Todo::fetchFindBYQuery($query);
 
-updateStatus($status = 2, $status_fp, $filename);
+if($stmh_result){
+    updateStatus($status = 2, $status_fp, $filename);
 
-$fp = fopen($csv_place,'w');
-if($fp){
-    $header_title = array_keys($todo_lists[0]);
-    fputcsv($fp,$header_title);
-    foreach($todo_lists as $todo_list){
-        $todo_lists = mb_convert_encoding($line,'SJIS','UTF8');
-        fputcsv($fp,$todo_list);
+    $fp = fopen($csv_place,'w');
+    if($fp){
+        $line = $stmh_result->fetch(PDO::FETCH_ASSOC);
+        $header_line = array_keys($line);
+        fputcsv($fp,$header_line);
+        $line = mb_convert_encoding($line,'SJIS','UTF8');
+        fputcsv($fp,$line);
         $count++;
+        while($line = $stmh_result->fetch(PDO::FETCH_ASSOC)){
+                $line = mb_convert_encoding($line,'SJIS','UTF8');
+                fputcsv($fp,$line);
+                $count++;
+        }
     }
 }
 $result = fclose($fp);

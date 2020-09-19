@@ -10,7 +10,7 @@
 <body>
 <div class="wrapper-container">
     <div class="title">404 NOT FOUND!</div>
-    <a href="../todo/index.php">To index</a>
+    <a class="link" href="../todo/index.php">To index</a>
 </div>
 </body>
 </html>

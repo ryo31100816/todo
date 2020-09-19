@@ -1,8 +1,11 @@
 <?php
-
 session_start();
-$download_csv = sprintf('/app/bin/tmp/%s', $_SESSION['download_csv']);
+require_once '../../controller/TodoController.php';
+$login_status = new TodoController();
+$filename = $_SESSION['download_csv'];
+$download_csv = sprintf('/app/bin/tmp/%s', $filename);
 $comp_time = $_SESSION['comp_time'];
+
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +15,6 @@ $comp_time = $_SESSION['comp_time'];
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Download CSV</title>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
         <link rel="stylesheet" href="/css/normalize.css">
         <link rel="stylesheet" href="/css/stylesheet.css">
     </head>
@@ -20,14 +22,18 @@ $comp_time = $_SESSION['comp_time'];
 <div class="wrapper-container">
     <div class="title">CSV STATUS</div>
         <div  class="board-contents"> 
-        <?php if($download_csv) : ?>
-            <a>作成完了</a>
-            <a href=<?php echo $download_csv; ?>>todo_list.csv</a>
-            <p><?php echo $comp_time; ?></p>
-        <?php else : ?>
-            <a>作成中・・・</a>
-        <? endif ?>
+            <div class="showstatus">
+                <?php if(isset($filename)) : ?>
+                    <div>作成完了</div>
+                    <p><?php echo $comp_time; ?></p>
+                    <a class="download" href=<?php echo $download_csv; ?>></a>
+                <?php else : ?>
+                    <p>作成中・・・</p>
+                <? endif ?>
+            </div>
         </div>
+        <a class="link" href="./index.php">Todo Index</a>
+    </div>
 </div>  
 </body>
 </html>

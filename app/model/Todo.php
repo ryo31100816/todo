@@ -60,6 +60,13 @@ class Todo extends Bassmodel{
         return $todo_list;
     }
 
+    public static function fetchFindByQuery($query){
+        $pdo = self::dbConnect();
+        $dbh = $pdo;
+        $stmh = $dbh->query($query);
+        return $stmh;
+    }
+
     public static function findAll($user_id) {
         $pdo = self::dbConnect();
         $dbh = $pdo;
@@ -147,7 +154,7 @@ class Todo extends Bassmodel{
     }
 
     public function complete(){
-        $query = sprintf("UPDATE `todos` SET completed_at = NOW() WHERE id = '%s';",$this->todo_id);
+        $query = sprintf("UPDATE `todos` SET status = 1, completed_at = NOW() WHERE id = '%s';",$this->todo_id);
         $dbh = $this->dbConnect();
         try {
             $dbh->beginTransaction();

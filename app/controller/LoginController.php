@@ -4,7 +4,15 @@ require_once '../../validation/LoginValidation.php';
 
 class LoginController{
 
-    public static function login(){
+    public function __construct(){
+        if(isset($_SESSION['login_user']) && $_SESSION['login_user'] > 0){
+            header("Location: ../login/mypage.php");
+            return;
+        }
+        return;
+    }
+
+    public function login(){
         $data = array(
             'email' => $_POST['email'],
             'password' => $_POST['password']
@@ -13,10 +21,9 @@ class LoginController{
         $validation->setData($data);
         if($validation->check() === false) {
             $error_msgs = $validation->getErrorMessages();
-            session_start();
             $_SESSION['error_msgs'] = $error_msgs;
             header("Location: ../../view/login/login_form.php");
-            return;
+            exit();
         }
         $validate_data = $validation->getData();
         $email = $validate_data['email'];
@@ -49,7 +56,7 @@ class LoginController{
     }
 
     public static function escape($str){
-        return htmlspecialchars($str,ENT_QUOTES,'utf-8');
+        return htmlspecialchars($str,ENT_QUOTES|ENT_HTML5,'utf-8');
     }
     
     public static function setToken(){

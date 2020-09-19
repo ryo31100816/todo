@@ -3,7 +3,7 @@ require_once 'Bassmodel.php';
 
 class User extends Bassmodel{
 
-    const TOKEN_LIMIT = 3600;
+    const TOKEN_LIMIT = 600;
     private $user_id;
     private $username;
     private $email;

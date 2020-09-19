@@ -4,11 +4,7 @@ require_once '../../controller/LoginController.php';
 
 $csrf_token = LoginController::escape(LoginController::setToken());
 
-$login_status = LoginController::checkLogin();
-if($login_status){
-    header('Location: mypage.php');
-    return;
-}
+$login_status = new LoginController;
 
 $error_msgs = isset($_SESSION['error_msgs']) ? $_SESSION['error_msgs'] : null;
 unset($_SESSION['error_msgs']);
@@ -40,9 +36,12 @@ unset($_SESSION['error_msgs']);
             </div>
         </div>
         <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
-        <p><input type="submit" value="sinup"></p>
+        <button class="btn" type="submit">
+        <div class="check">&check;</div>
+        <div class="position">SendMail</div>
+        </button>
     </form>
-    <a href="./login_form.php">Login</a>
+    <a class="link" href="./login_form.php">Login</a>
 </div>
 </body>
 </html>

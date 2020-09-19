@@ -16,7 +16,6 @@ $todo = $action->detail();
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Detail</title>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
         <link rel="stylesheet" href="/css/normalize.css">
         <link rel="stylesheet" href="/css/stylesheet.css">
     </head>
@@ -26,19 +25,23 @@ $todo = $action->detail();
     <form class="showboard" method="POST" action="./edit.php">
     <input type="hidden" name="todo_id" value="<?php echo $todo['id'];?>">
         <div  class="board-contents"> 
-            <div>Title</div>
+            <div>Title:</div>
             <div>
-                <a class="board-item border-btm"><?php echo $todo["title"];?></a>
+            <p class="board-item border-btm"><?php echo $todo["title"];?></p>
             </div>
         </div>
         <div  class="board-contents"> 
-            <div>Detail</div>
+            <div>Detail:</div>
             <div>       
-                <a class="board-item border-btm"><?php echo $todo["detail"];?></a>
+            <p class="board-item border-btm"><?php echo $todo["detail"];?></p>
             </div>
-        </div>    
-        <button type="submit"><a href="./edit.php?todo_id=<?php echo $todo['id'];?>"> To Edit</a></button>      
+        </div>
+        <a href="./edit.php?todo_id=<?php echo $todo['id'];?>">
+        <div class="edit icon"></div>
+        <p class="word link">Edit</p>
+        </a>
     </form>
-</div>  
+    <a class="link" href="./index.php">Todo Index</a>
+</div>
 </body>
 </html>

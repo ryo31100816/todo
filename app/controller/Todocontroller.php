@@ -16,30 +16,17 @@ class TodoController{
         $user_id = $_SESSION['login_user']['user_id'];
         if(isset($_GET['search'])){
             $search_word = '%'.$_GET['word'].'%';
-            $search_word = $this->search($search_word);
-            $search_comp = $_GET['completed_at'];
-            $query = $this->getQuery($user_id,$search_word,$search_comp);
+            $status = $_GET['status'];
+            $query = $this->getQuery($user_id,$search_word,$status);
             return Todo::findByQuery($query);
         }
         return Todo::findAll($user_id);
     }
 
-    public function getQuery($user_id,$search_word,$search_comp){
-        $query = sprintf("SELECT * FROM todos WHERE user_id = %s AND title LIKE '%s' AND completed_at  IS %s;",
-            $user_id, $search_word,$search_comp);
+    public function getQuery($user_id,$search_word,$status){
+        $query = sprintf("SELECT * FROM todos WHERE user_id = %s AND title LIKE '%s' AND status = %s;",
+            $user_id, $search_word,$status);
         return $query;
-    }
-
-    public function search($search_word){
-        $search_word = htmlspecialchars($search_word,ENT_QUOTES,'utf-8');
-        $validation = new TodoValidation;
-        $validation->setData($search_word);
-        if($validation->checkSearch() === false) {
-            header("Location: ../../view/todo/index.php");
-            return;
-        }
-        $validate_data = $validation->getData();
-        return $validate_data;
     }
 
     public function detail(){

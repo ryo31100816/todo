@@ -10,6 +10,10 @@ $(function(){
    window.location.href = "./index.php?action=complete&todo_id=" + todo_id;
 });
 
+$("#request").click(function() {
+   $("#dl-btn").removeClass('hide');
+});
+
  $(document).ready(function(){
     $('.task').fadeIn(1500);
  });
@@ -21,8 +25,9 @@ function toArray(nodeList) {
  toArray(elements).forEach(function(element) {
    let status = element.getAttribute('value');
    console.log(status);
-   if(typeof status !== 'undefined' && status !== ''){
-      element.parentNode.classList.add('completed_at');
+   if(status === "1"){
+      element.parentNode.classList.add('completed');
+      element.previousElementSibling.classList.add('done');
    }
  });
 

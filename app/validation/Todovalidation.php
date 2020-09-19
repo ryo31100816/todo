@@ -34,14 +34,4 @@ class TodoValidation{
         return true;
     }
 
-    public function checkSearch(){
-        $search_word = $this->data;
-        if(empty($search_word)){
-            $this->error_msg[] = '空です。';
-        }
-        if(count($this->error_msg) > 0){
-            return false;
-        }
-        return true;
-    }
 }

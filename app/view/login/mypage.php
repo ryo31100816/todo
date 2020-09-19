@@ -33,11 +33,23 @@ $email = LoginController::escape($login_user['email']);
 <body>
 <div class="wrapper-container">
     <div class="title">My Page</div>
-    <p>User:<?php echo $username ?></p>
-    <p>E-mail:<?php echo $email ?></p>
-    <form method="POST" action="mypage.php">
-    <input type="submit" name="logout" value="Logout">
-    </form>
+    <div class="showboard">
+        <div class="board-contents">
+        <p>User:</p>
+        <p class="board-contents border-btm"><?php echo $username ?></p>
+        </div>
+        <div class="board-contents">
+        <p>E-mail:</p>
+        <p class="board-contents border-btm"><?php echo $email ?></p>
+        </div>
+        <form method="POST" action="mypage.php">
+            <button class="btn" type="submit" name="logout" value="logout">
+            <div class="check">&check;</div>
+            <div class="word">Logout</div>
+            </button>
+        </form>
+    </div>
+    <a class="link" href="../todo/index.php">Todo Index</a>
 </div>
 </body>
 </html>

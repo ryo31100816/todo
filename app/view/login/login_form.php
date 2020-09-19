@@ -2,9 +2,9 @@
 session_start();
 require_once '../../controller/LoginController.php';
 
-
+$action = new LoginController;
 if($_SERVER["REQUEST_METHOD"] === "POST"){
-    $action = LoginController::login();
+    $action = $action->login();
     if($action === true){
         header('Location: ../todo/index.php');
         return;
@@ -46,9 +46,12 @@ unset($_SESSION['error_msgs']);
                 <p><?php echo $error_msgs['password'];?></p>
             <?php endif; ?>
         </div>
-        <input type="submit" value="Login">
+        <button class="btn" type="submit">
+        <div class="check">&check;</div>
+        <div class="word">Login</div>
+        </button>
     </form>
-    <a href="./pre_signup_form.php">Pre Signup</a>
+    <a class="link" href="./pre_signup_form.php">Pre Signup</a>
 </div>
 </body>
 </html>

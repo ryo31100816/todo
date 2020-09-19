@@ -17,7 +17,6 @@ unset($_SESSION["error_msgs"]);
     <head>
         <meta charset="UTF-8">
         <title>Edit</title>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
         <link rel="stylesheet" href="/css/normalize.css">
         <link rel="stylesheet" href="/css/stylesheet.css">
     </head>
@@ -36,19 +35,24 @@ unset($_SESSION["error_msgs"]);
     <form class="showboard" method="POST" action="./edit.php">
     <input type="hidden" name="todo_id" value="<?php echo $_GET['todo_id'];?>">
         <div  class="board-contents"> 
-            <div>Title</div>
+            <div>Title:</div>
             <div>
             <input class="board-item" name="title" type="text" value="<?php echo $todo['title'];?>">
             </div>
         </div>
         <div  class="board-contents"> 
-            <div>Detail</div>
+            <div>Detail:</div>
             <div>
             <textarea class="board-item" name="detail"><?php echo $todo['detail'];?></textarea>
             </div>
         </div>
-        <button type="submit"><i class="far fa-edit"></i>Edit</button>
+        <button class="btn" type="submit">
+        <div class="check">&check;</div>
+        <div class="word">OK</div>
+        </button>
     </form>
+    <a class="link" href="./detail.php?todo_id=<?php echo $todo['id'];?>">Detail</a>
+</div>
 </div>
 </body>
 </html>

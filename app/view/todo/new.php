@@ -30,11 +30,12 @@ if($_SERVER["REQUEST_METHOD"] === "GET") {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>NEW</title>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
         <link rel="stylesheet" href="/css/normalize.css">
         <link rel="stylesheet" href="/css/stylesheet.css">
     </head>
 <body>
+<div class="wrapper-container">
+    <div class="title">New TODO</div>
     <?php if($error_msgs):?>
     <div>
         <ul>
@@ -44,37 +45,23 @@ if($_SERVER["REQUEST_METHOD"] === "GET") {
         </ul>
     </div>
     <?php endif;?>
-<div class="wrapper-container">
-    <div class="title">New TODO</div>
     <form class="showboard" method="POST" action="./new.php">
     <input type="hidden" name="user_id" value="<?php echo $user_id;?>">
         <div  class="board-contents"> 
-            <div>Title</div>
+            <div>Title:</div>
             <div>
             <input class= "board-item" name="title" type="text" value="<?php echo $title;?>">
             </div>
         </div>
         <div  class="board-contents">
-            <div>Detail</div>
+            <div>Detail:</div>
             <div>
             <textarea class="board-item" name="detail"><?php echo $detail;?></textarea>
             </div>
         </div>
-        <button class="new-btn" type="submit"><i class="fas fa-plus"></i>Add</button>
+        <button class="btn" type="submit"><p class="check">&check;</p class="word"><ui>Add</ui></button>
     </form>
+    <a class="link" href="./index.php">Todo Index</a>
 </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
