@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../../controller/UserController.php';
+require_once (__DIR__.'/../../controller/UserController.php');
 
 $token = filter_input(INPUT_POST,'csrf_token');
 if(!isset($_SESSION['csrf_token']) || $token !== $_SESSION['csrf_token']){

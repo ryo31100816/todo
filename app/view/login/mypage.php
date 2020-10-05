@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../../controller/LoginController.php';
+require_once (__DIR__.'/../../controller/LoginController.php');
 
 $result = LoginController::checkLogin();
 if(!$result){

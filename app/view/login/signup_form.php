@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once '../../controller/UserController.php';
-require_once '../../controller/LoginController.php';
+require_once (__DIR__.'/../../controller/UserController.php');
+require_once (__DIR__.'/../../controller/LoginController.php');
 
 $token = filter_input(INPUT_GET,'token');
 if(isset($token)){

@@ -1,8 +1,8 @@
 <?php
-require_once '../../model/User.php';
-require_once '../../validation/UserValidation.php';
-require_once '../../validation/PreUserValidation.php';
-require_once '../../service/MailService.php';
+require_once (__DIR__.'/../model/User.php');
+require_once (__DIR__.'/../validation/UserValidation.php');
+require_once (__DIR__.'/../validation/PreUserValidation.php');
+require_once (__DIR__.'/../service/MailService.php');
 
 class UserController{
 

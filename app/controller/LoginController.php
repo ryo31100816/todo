@@ -1,6 +1,6 @@
 <?php
-require_once '../../model/User.php';
-require_once '../../validation/LoginValidation.php';
+require_once (__DIR__.'/../model/User.php');
+require_once (__DIR__.'/../validation/LoginValidation.php');
 
 class LoginController{
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../../controller/TodoController.php';
+require_once (__DIR__.'/../../controller/TodoController.php');
 
 try {
     $dbh = new PDO(DSN, USER, PASSWORD);

@@ -1,5 +1,5 @@
 <?php
-require_once '/var/www/html/app/model/Todo.php';
+require_once (__DIR__.'/../model/Todo.php');
 
 $user_id = $argv[1];
 $output_path = '/var/www/html/app/bin/tmp/';

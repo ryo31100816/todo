@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once '../../config/database.php';
-require_once '../../model/Todo.php';
-require_once '../../controller/TodoController.php';
+require_once (__DIR__.'/../../config/database.php');
+require_once (__DIR__.'/../../model/Todo.php');
+require_once (__DIR__.'/../../controller/TodoController.php');
 
 $action = new TodoController();
 $todo = $action->detail();

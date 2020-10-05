@@ -1,5 +1,5 @@
 <?php
-require_once '../../controller/UserController.php';
+require_once (__DIR__.'/../../controller/UserController.php');
 
 session_start();
 $token = filter_input(INPUT_POST,'csrf_token');
@@ -25,7 +25,7 @@ unset($_SESSION['pre_user']);
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/css/normalize.css">
-        <link rel="stylesheet" href="/css/stylesheet-new.css">
+        <link rel="stylesheet" href="/css/stylesheet.css">
         <title>Complete</title>
     </head>
 <body>
