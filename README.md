@@ -1,6 +1,6 @@
 # Todoアプリ
  
-※テスト用アカウントでログインできます。
+※テスト用アカウントでログンできます。<br>
  　E-mail:　test@test.co.jp
 　 password:　 testtesttest
 
