@@ -1,4 +1,9 @@
 # Todoアプリ
+ 
+※テスト用アカウントでログインできます。
+ 　E-mail:　test@test.co.jp
+　 password:　 testtesttest
+
 
 ## Ⅰ作成の趣旨
 　・PHPを使用した開発に必要な知識の習得
