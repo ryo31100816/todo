@@ -21,7 +21,7 @@ services:
     depends_on: #mysqlより後
     - mysql
   mysql:
-    image: mysql:5.7 #このイメージを使いコンテナを作る
+    image: mysql:5.7
     environment:
       MYSQL_DATABASE: myDB
       MYSQL_USER: Ryo

@@ -35,6 +35,7 @@ if(!$result){
     <?php else : ?>
         <div class="title">Complete</div>
         <p>メールを送信しました。</p>
+        <a href="http://54.250.109.64:8025" target="_blank" class="board-contents">〇メールはこちら〇</a>
     <?php endif ?>
     <a href="../login/pre_signup_form.php">Signup</a>
 </div>

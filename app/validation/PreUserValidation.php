@@ -20,10 +20,6 @@ class PreUserValidation{
     public function preRegisterCheck(){
         $email = $this->data;
    
-        if(!$email){
-            $this->error_msg[] = 'メールアドレスを入力してください。';
-        }
-
         if(!preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/",$email)){
             $this->error_msg[] = 'メールアドレスを正しく入力してください。';
         }
