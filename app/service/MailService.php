@@ -6,7 +6,7 @@ class MailService{
         $to = $email;
         $subject = 'Please Regist Your Account!';
         $param = sprintf('?token=%s', $token);
-        $url = 'http://127.0.0.1:8000/app/view/login/signup_form.php'.$param;
+        $url = 'http://54.250.109.64:8000/app/view/login/signup_form.php'.$param;
         $message = 'Click this URL:'.$url;
         $from = 'admin@mail.com';
         $header = "From: ".$from."\r\n";
